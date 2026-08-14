@@ -41,9 +41,7 @@ body {
   padding: 0 20px;
 }
 
-/* ==========================================================================
-   NAVIGATION
-   ========================================================================== */
+/* NAVIGATION */
 .nav {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
@@ -105,9 +103,7 @@ body {
   background: #1e293b !important;
 }
 
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
+/* HERO SECTION */
 .hero {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
@@ -218,9 +214,7 @@ body {
   font-weight: 700;
 }
 
-/* ==========================================================================
-   SECTION HEADERS
-   ========================================================================== */
+/* SECTION HEADERS */
 .section-head {
   display: flex;
   justify-content: space-between;
@@ -243,9 +237,7 @@ body {
   margin-top: 4px;
 }
 
-/* ==========================================================================
-   CATEGORIES GRID
-   ========================================================================== */
+/* CATEGORIES */
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -283,9 +275,7 @@ body {
   margin-top: 4px;
 }
 
-/* ==========================================================================
-   TOOL GRID & CARDS (10/10 DUAL-TONE BRAND AVATARS)
-   ========================================================================== */
+/* TOOLS GRID & CARDS */
 .tools-wrap {
   padding: 8px 0 56px 0;
 }
@@ -328,7 +318,6 @@ body {
   gap: 12px;
 }
 
-/* Monogram Logo Avatar */
 .brand-avatar {
   width: 44px;
   height: 44px;
@@ -399,9 +388,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   BUTTONS
-   ========================================================================== */
+/* BUTTONS */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -448,9 +435,7 @@ body {
   width: 100%;
 }
 
-/* ==========================================================================
-   FILTER CONTROLS (STICKY MOBILE HUD)
-   ========================================================================== */
+/* FILTER CONTROLS (STICKY MOBILE HUD) */
 .filter-controls {
   display: grid;
   grid-template-columns: 1fr 240px;
@@ -490,9 +475,7 @@ select:focus, input[type="text"]:focus {
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
 
-/* ==========================================================================
-   FINDER CARD & COMPARISON TABLE (10/10 ASSET UPGRADE)
-   ========================================================================== */
+/* FINDER CARD & COMPARISON TABLE */
 .finder-card {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -538,9 +521,7 @@ select:focus, input[type="text"]:focus {
   color: var(--text-dark);
 }
 
-/* ==========================================================================
-   FEATURE BANNER & FOOTER
-   ========================================================================== */
+/* FEATURE BANNER & FOOTER */
 .feature {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
@@ -606,11 +587,20 @@ select:focus, input[type="text"]:focus {
   line-height: 1.6;
 }
 
-.empty {
+.empty-state-box {
   display: none;
   text-align: center;
-  padding: 40px;
+  padding: 48px 24px;
+  background: #ffffff;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+
+.empty-state-box p {
   color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 16px;
 }
 
 .footer {
