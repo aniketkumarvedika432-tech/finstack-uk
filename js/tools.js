@@ -75,7 +75,7 @@ const TOOLS_DATA = [
   },
   {
     id: "revolut-business",
-    name: "Business Banking",
+    name: "Revolut Business",
     category: "Business Banking",
     tagline: "Global business accounts with multi-currency exchange and modern corporate cards.",
     description: "Enables multi-currency holding accounts, virtual/physical team expense cards, and seamless integration with major accounting tools.",
