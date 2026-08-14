@@ -1,65 +1,20 @@
 /**
- * Application Engine for FinStack UK
- * Unified handler for Homepage, Directory, Finder, and Profiles
+ * FinStack UK Engine
+ * Unified handler for Index, Directory, Finder, and Profiles
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initLiveCounters();
-  initHomepageFeatured();
-  initDirectoryPage();
-  initFinderEngine();
-  initProfilePage();
+  if (typeof TOOLS_DATA === "undefined" || !Array.isArray(TOOLS_DATA)) {
+    console.error("FinStack: TOOLS_DATA is not defined or loaded.");
+    return;
+  }
+
+  updateLiveCounters();
+  initPageControllers();
 });
 
-/* ==========================================================================
-   1. COMMON UTILITIES & STAT COUNTERS
-   ========================================================================== */
-function initLiveCounters() {
-  const countElements = document.querySelectorAll(".tool-count, #total-tools-count");
-  if (countElements.length > 0 && typeof TOOLS_DATA !== "undefined") {
-    countElements.forEach(el => {
-      el.textContent = `${TOOLS_DATA.length}+`;
-    });
-  }
-}
-
-function getQueryParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
-}
-
-function createToolCard(tool) {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.setAttribute("data-id", tool.id);
-  card.setAttribute("data-category", tool.category);
-
-  card.innerHTML = `
-    <div class="card-header">
-      <div>
-        <span class="category-badge">${escapeHtml(tool.category)}</span>
-        <h3 class="card-title">${escapeHtml(tool.name)}</h3>
-      </div>
-      <div class="card-rating">★ ${tool.rating || 4.5}</div>
-    </div>
-    <p class="card-desc">${escapeHtml(tool.tagline)}</p>
-    <div class="card-meta">
-      <div class="meta-item">
-        <strong>Best for:</strong> ${escapeHtml(tool.bestFor)}
-      </div>
-      <div class="meta-item">
-        <strong>Pricing:</strong> ${escapeHtml(tool.pricing)}
-      </div>
-    </div>
-    <div class="card-actions">
-      <a href="tool.html?id=${encodeURIComponent(tool.id)}" class="btn btn-secondary btn-sm">View Details</a>
-      <a href="${escapeHtml(tool.website)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Visit Tool ↗</a>
-    </div>
-  `;
-  return card;
-}
-
-function escapeHtml(str) {
+// Helper: Escape HTML strings safely
+function esc(str) {
   if (!str) return "";
   return String(str)
     .replace(/&/g, "&amp;")
@@ -69,225 +24,222 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-/* ==========================================================================
-   2. HOMEPAGE FEATURED TOOLS
-   ========================================================================== */
-function initHomepageFeatured() {
-  const featuredContainer = document.getElementById("featured-tools-grid");
-  if (!featuredContainer || typeof TOOLS_DATA === "undefined") return;
-
-  featuredContainer.innerHTML = "";
-  const featuredTools = TOOLS_DATA.filter(t => t.featured).slice(0, 6);
-
-  featuredTools.forEach(tool => {
-    featuredContainer.appendChild(createToolCard(tool));
+// 1. Live Counters
+function updateLiveCounters() {
+  const counterSelectors = ["#toolCount", "#total-tools-count", ".tool-count", "#directory-count"];
+  counterSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (el.id === "toolCount" || el.classList.contains("tool-count")) {
+        el.textContent = `${TOOLS_DATA.length}+`;
+      }
+    });
   });
 }
 
-/* ==========================================================================
-   3. DIRECTORY (tools.html) - SEARCH & FILTERING
-   ========================================================================== */
-function initDirectoryPage() {
-  const grid = document.getElementById("tools-grid");
-  const searchInput = document.getElementById("directory-search");
-  const categoryFilter = document.getElementById("category-filter");
-  const resultCount = document.getElementById("directory-count");
-  const emptyState = document.getElementById("empty-state");
+// 2. Card HTML Generator (FinStack CSS Compatible)
+function buildToolCard(tool) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="card-top">
+      <div>
+        <span class="pill">${esc(tool.category)}</span>
+        <h3>${esc(tool.name)}</h3>
+      </div>
+      <div style="font-weight:700; color:var(--primary, #0f766e);">★ ${tool.rating || 4.5}</div>
+    </div>
+    <p>${esc(tool.tagline || tool.description)}</p>
+    <div class="meta-row"><strong>Best for:</strong> <span>${esc(tool.bestFor || "UK Businesses")}</span></div>
+    <div class="meta-row"><strong>Pricing:</strong> <span>${esc(tool.pricing || "Transparent")}</span></div>
+    <div class="actions" style="margin-top:16px; display:flex; gap:8px;">
+      <a class="btn btn-secondary" href="tool.html?id=${encodeURIComponent(tool.id)}">Profile</a>
+      <a class="btn" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer">Visit ↗</a>
+    </div>
+  `;
+  return card;
+}
 
-  if (!grid || typeof TOOLS_DATA === "undefined") return;
+// 3. Page Initialiser
+function initPageControllers() {
+  const isHomepage = !!document.querySelector(".hero") || window.location.pathname.endsWith("index.html") || window.location.pathname === "/";
+  const isDirectory = !!document.getElementById("search") || !!document.getElementById("directory-search") || window.location.pathname.endsWith("tools.html");
+  const isFinder = !!document.getElementById("finderForm") || !!document.getElementById("finder-form") || window.location.pathname.endsWith("finder.html");
+  const isProfile = !!document.getElementById("toolProfile") || !!document.getElementById("tool-profile-container") || window.location.pathname.endsWith("tool.html");
 
-  const urlCategory = getQueryParam("category");
-  const urlSearch = getQueryParam("q");
+  if (isHomepage) initHomepage();
+  if (isDirectory) initDirectory();
+  if (isFinder) initFinder();
+  if (isProfile) initProfile();
+}
 
-  if (categoryFilter && urlCategory) {
-    categoryFilter.value = urlCategory;
+// 4. Homepage Logic
+function initHomepage() {
+  const grid = document.getElementById("toolGrid") || document.getElementById("featured-tools-grid");
+  const empty = document.getElementById("empty") || document.getElementById("empty-state");
+
+  if (!grid) return;
+  if (empty) empty.style.display = "none";
+
+  grid.innerHTML = "";
+  const featured = TOOLS_DATA.filter(t => t.featured).slice(0, 6);
+  featured.forEach(tool => grid.appendChild(buildToolCard(tool)));
+}
+
+// 5. Directory Page Logic
+function initDirectory() {
+  const grid = document.getElementById("toolGrid") || document.getElementById("tools-grid");
+  const searchInput = document.getElementById("search") || document.getElementById("directory-search") || document.querySelector('input[type="search"]');
+  const catSelect = document.getElementById("cat") || document.getElementById("category-filter") || document.getElementById("categorySelect");
+  const empty = document.getElementById("empty") || document.getElementById("empty-state");
+  const countEl = document.getElementById("resultsCount") || document.getElementById("directory-count");
+
+  if (!grid) return;
+
+  // Read URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialCat = urlParams.get("cat") || urlParams.get("category");
+  const initialQuery = urlParams.get("q") || urlParams.get("search");
+
+  if (catSelect && initialCat) {
+    for (let opt of catSelect.options) {
+      if (opt.value.toLowerCase() === initialCat.toLowerCase()) {
+        catSelect.value = opt.value;
+        break;
+      }
+    }
   }
-  if (searchInput && urlSearch) {
-    searchInput.value = urlSearch;
+
+  if (searchInput && initialQuery) {
+    searchInput.value = initialQuery;
   }
 
-  function renderFilteredTools() {
-    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
-    const selectedCategory = categoryFilter ? categoryFilter.value : "All";
+  function render() {
+    const q = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const chosenCat = catSelect ? catSelect.value : (initialCat || "all");
 
     grid.innerHTML = "";
 
-    const filtered = TOOLS_DATA.filter(tool => {
-      const matchesCategory =
-        !selectedCategory ||
-        selectedCategory === "All" ||
-        tool.category.toLowerCase() === selectedCategory.toLowerCase();
+    const results = TOOLS_DATA.filter(tool => {
+      const matchCat =
+        !chosenCat ||
+        chosenCat.toLowerCase() === "all" ||
+        tool.category.toLowerCase() === chosenCat.toLowerCase();
 
-      const searchContent = `${tool.name} ${tool.tagline} ${tool.description} ${tool.category} ${tool.tags.join(" ")} ${tool.bestFor}`.toLowerCase();
-      const matchesSearch = !query || searchContent.includes(query);
+      const searchCorpus = `${tool.name} ${tool.category} ${tool.tagline} ${tool.description} ${tool.bestFor} ${tool.tags ? tool.tags.join(" ") : ""}`.toLowerCase();
+      const matchQuery = !q || searchCorpus.includes(q);
 
-      return matchesCategory && matchesSearch;
+      return matchCat && matchQuery;
     });
 
-    if (filtered.length === 0) {
-      if (emptyState) emptyState.style.display = "block";
-      if (resultCount) resultCount.textContent = "Showing 0 tools";
+    if (results.length === 0) {
+      if (empty) empty.style.display = "block";
+      if (countEl) countEl.textContent = "Showing 0 tools";
     } else {
-      if (emptyState) emptyState.style.display = "none";
-      if (resultCount) resultCount.textContent = `Showing ${filtered.length} tool${filtered.length === 1 ? "" : "s"}`;
-      filtered.forEach(tool => grid.appendChild(createToolCard(tool)));
+      if (empty) empty.style.display = "none";
+      if (countEl) countEl.textContent = `Showing ${results.length} tool${results.length === 1 ? "" : "s"}`;
+      results.forEach(tool => grid.appendChild(buildToolCard(tool)));
     }
   }
 
-  if (searchInput) {
-    searchInput.addEventListener("input", renderFilteredTools);
-  }
-  if (categoryFilter) {
-    categoryFilter.addEventListener("change", renderFilteredTools);
-  }
+  if (searchInput) searchInput.addEventListener("input", render);
+  if (catSelect) catSelect.addEventListener("change", render);
 
   // Initial immediate render
-  renderFilteredTools();
+  render();
 }
 
-/* ==========================================================================
-   4. FINDER (finder.html) - SHORTLIST GENERATOR
-   ========================================================================== */
-function initFinderEngine() {
-  const finderForm = document.getElementById("finder-form");
-  const resultsSection = document.getElementById("finder-results");
-  const shortlistContainer = document.getElementById("shortlist-grid");
+// 6. Finder Engine
+function initFinder() {
+  const form = document.getElementById("finderForm") || document.getElementById("finder-form") || document.querySelector("form");
+  const resultsContainer = document.getElementById("results") || document.getElementById("finder-results") || document.getElementById("shortlist-grid");
 
-  if (!finderForm || !resultsSection || !shortlistContainer || typeof TOOLS_DATA === "undefined") {
-    return;
-  }
+  if (!form || !resultsContainer) return;
 
-  finderForm.addEventListener("submit", (e) => {
+  form.addEventListener("submit", e => {
     e.preventDefault();
 
-    const businessType = finderForm.querySelector('select[name="business_type"]')?.value || "";
-    const primaryNeed = finderForm.querySelector('select[name="primary_need"]')?.value || "";
-    const priority = finderForm.querySelector('select[name="priority"]')?.value || "";
+    const formData = new FormData(form);
+    const businessType = (formData.get("type") || formData.get("business_type") || "").toLowerCase();
+    const need = (formData.get("need") || formData.get("primary_need") || "").toLowerCase();
+    const priority = (formData.get("priority") || "").toLowerCase();
 
-    const scoredTools = TOOLS_DATA.map(tool => {
+    const scored = TOOLS_DATA.map(tool => {
       let score = 0;
-      const toolTags = tool.tags.map(t => t.toLowerCase());
+      const tags = (tool.tags || []).map(t => t.toLowerCase());
 
-      // 1. Primary category match (Weight: 5)
-      if (primaryNeed && tool.category.toLowerCase() === primaryNeed.toLowerCase()) {
-        score += 5;
-      }
-
-      // 2. Business type match (Weight: 3)
-      if (businessType && (toolTags.includes(businessType.toLowerCase()) || tool.bestFor.toLowerCase().includes(businessType.toLowerCase()))) {
-        score += 3;
-      }
-
-      // 3. Priority match (Weight: 2)
+      if (need && tool.category.toLowerCase().includes(need)) score += 5;
+      if (businessType && (tags.includes(businessType) || tool.bestFor.toLowerCase().includes(businessType))) score += 3;
       if (priority) {
-        if (priority === "low-cost" && (toolTags.includes("low-cost") || toolTags.includes("free-tier") || tool.pricing.toLowerCase().includes("free"))) {
-          score += 2;
-        } else if (priority === "all-in-one" && (toolTags.includes("accounting") || toolTags.includes("banking"))) {
-          score += 2;
-        } else if (priority === "international" && toolTags.includes("international")) {
-          score += 2;
-        }
+        if (priority.includes("cost") && (tags.includes("low-cost") || tags.includes("free-tier") || tool.pricing.toLowerCase().includes("free"))) score += 2;
+        if (priority.includes("inter") && tags.includes("international")) score += 2;
       }
 
-      return { ...tool, matchScore: score };
+      return { ...tool, score };
     });
 
-    const shortlisted = scoredTools
-      .filter(item => item.matchScore > 0)
-      .sort((a, b) => b.matchScore - a.matchScore)
+    const shortlist = scored
+      .filter(t => t.score > 0)
+      .sort((a, b) => b.score - a.score)
       .slice(0, 4);
 
-    shortlistContainer.innerHTML = "";
+    const finalTarget = document.getElementById("shortlist-grid") || resultsContainer;
+    finalTarget.innerHTML = "";
 
-    if (shortlisted.length === 0) {
-      shortlistContainer.innerHTML = "<p class='no-results'>No specific matches found. Try selecting different criteria.</p>";
+    if (shortlist.length === 0) {
+      finalTarget.innerHTML = "<p>No exact match found. Try selecting broader options or explore the full directory.</p>";
     } else {
-      shortlisted.forEach(tool => {
-        const item = document.createElement("div");
-        item.className = "card shortlist-card";
-        item.innerHTML = `
-          <div class="card-header">
-            <div>
-              <span class="category-badge">${escapeHtml(tool.category)}</span>
-              <h3 class="card-title">${escapeHtml(tool.name)}</h3>
-            </div>
-            <span class="badge badge-success">Match Score: ${tool.matchScore}/10</span>
-          </div>
-          <p class="card-desc">${escapeHtml(tool.tagline)}</p>
-          <div class="card-meta">
-            <div class="meta-item"><strong>Why it matches:</strong> Best suited for ${escapeHtml(tool.bestFor)}</div>
-            <div class="meta-item"><strong>Pricing:</strong> ${escapeHtml(tool.pricing)}</div>
-          </div>
-          <div class="card-actions">
-            <a href="tool.html?id=${encodeURIComponent(tool.id)}" class="btn btn-secondary btn-sm">Read Full Profile</a>
-            <a href="${escapeHtml(tool.website)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Visit Tool ↗</a>
-          </div>
-        `;
-        shortlistContainer.appendChild(item);
-      });
+      shortlist.forEach(tool => finalTarget.appendChild(buildToolCard(tool)));
     }
 
-    resultsSection.style.display = "block";
-    resultsSection.scrollIntoView({ behavior: "smooth" });
+    const wrapper = document.getElementById("finder-results") || resultsContainer;
+    wrapper.style.display = "block";
+    wrapper.scrollIntoView({ behavior: "smooth" });
   });
 }
 
-/* ==========================================================================
-   5. PROFILE PAGE (tool.html) - DYNAMIC LOADER
-   ========================================================================== */
-function initProfilePage() {
-  const profileContainer = document.getElementById("tool-profile-container");
-  if (!profileContainer || typeof TOOLS_DATA === "undefined") return;
+// 7. Dynamic Profile Page (tool.html)
+function initProfile() {
+  const target = document.getElementById("toolProfile") || document.getElementById("tool-profile-container") || document.getElementById("profile");
+  if (!target) return;
 
-  const toolId = getQueryParam("id");
+  const urlParams = new URLSearchParams(window.location.search);
+  const toolId = urlParams.get("id");
   const tool = TOOLS_DATA.find(t => t.id === toolId);
 
   if (!tool) {
-    profileContainer.innerHTML = `
-      <div class="profile-error text-center" style="padding: 60px 20px;">
+    target.innerHTML = `
+      <div style="padding:40px 0; text-align:center;">
         <h2>Tool Not Found</h2>
-        <p>The provider you requested does not exist in our directory or has moved.</p>
-        <a href="tools.html" class="btn btn-primary" style="margin-top: 15px;">Browse All Tools</a>
+        <p>The selected provider does not exist or has moved.</p>
+        <a class="btn" href="tools.html" style="margin-top:16px;">View all tools</a>
       </div>
     `;
     return;
   }
 
-  // Update Page Title
-  document.title = `${tool.name} Review & Pricing | FinStack UK`;
+  document.title = `${tool.name} Review & Details | FinStack UK`;
 
-  // Render Tool Profile
-  profileContainer.innerHTML = `
-    <div class="profile-header">
-      <span class="category-badge">${escapeHtml(tool.category)}</span>
-      <h1 class="profile-title">${escapeHtml(tool.name)}</h1>
-      <p class="profile-tagline">${escapeHtml(tool.tagline)}</p>
-      <div class="profile-rating">Rating: ★ ${tool.rating || 4.5} / 5.0</div>
+  target.innerHTML = `
+    <div style="margin-bottom:24px;">
+      <span class="pill">${esc(tool.category)}</span>
+      <h1 style="margin:12px 0 6px 0;">${esc(tool.name)}</h1>
+      <p style="font-size:1.15rem; color:#475569;">${esc(tool.tagline)}</p>
     </div>
-
-    <div class="profile-details-grid">
-      <div class="profile-main-content">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+      <div style="background:#fff; border:1px solid var(--border, #e2e8f0); border-radius:12px; padding:24px;">
         <h3>Overview</h3>
-        <p>${escapeHtml(tool.description)}</p>
-
-        <h3 style="margin-top: 25px;">Key Features</h3>
-        <ul class="feature-list">
-          ${tool.features.map(f => `<li>✓ ${escapeHtml(f)}</li>`).join("")}
+        <p style="margin-top:12px; line-height:1.6;">${esc(tool.description)}</p>
+        <h4 style="margin-top:20px;">Key Features</h4>
+        <ul style="margin-top:10px; padding-left:20px; line-height:1.8;">
+          ${(tool.features || []).map(f => `<li>${esc(f)}</li>`).join("")}
         </ul>
       </div>
-
-      <div class="profile-sidebar-card">
-        <h3>Tool Summary</h3>
-        <div class="sidebar-meta-row">
-          <strong>Category:</strong> <span>${escapeHtml(tool.category)}</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <strong>Best For:</strong> <span>${escapeHtml(tool.bestFor)}</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <strong>Pricing:</strong> <span>${escapeHtml(tool.pricing)}</span>
-        </div>
-        <a href="${escapeHtml(tool.website)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block" style="margin-top: 20px;">Visit Official Website ↗</a>
+      <div style="background:#fff; border:1px solid var(--border, #e2e8f0); border-radius:12px; padding:24px; height:fit-content;">
+        <h3>Summary</h3>
+        <div class="meta-row" style="margin-top:16px;"><strong>Best for:</strong> <span>${esc(tool.bestFor)}</span></div>
+        <div class="meta-row" style="margin-top:8px;"><strong>Pricing:</strong> <span>${esc(tool.pricing)}</span></div>
+        <div class="meta-row" style="margin-top:8px;"><strong>Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0</span></div>
+        <a class="btn" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center; margin-top:24px;">Visit Official Site ↗</a>
       </div>
     </div>
   `;
