@@ -555,10 +555,20 @@ select:focus, input[type="text"]:focus {
   color: var(--brand);
 }
 
-@media (max-width: 640px) {
-  .footer-inner {
+@/* Add at the bottom of css/style.css for ultra-narrow mobile refinement */
+@media (max-width: 480px) {
+  .hero-actions {
     flex-direction: column;
-    gap: 16px;
-    text-align: center;
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    height: 46px;
+  }
+  .filter-controls {
+    grid-template-columns: 1fr;
+  }
+  .actions {
+    grid-template-columns: 1fr;
   }
 }
