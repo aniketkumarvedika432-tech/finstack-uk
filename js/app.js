@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initPageControllers();
 });
 
-// Helper: Escape HTML strings safely
 function esc(str) {
   if (!str) return "";
   return String(str)
@@ -24,19 +23,15 @@ function esc(str) {
     .replace(/'/g, "&#039;");
 }
 
-// 1. Live Counters
 function updateLiveCounters() {
-  const counterSelectors = ["#toolCount", "#total-tools-count", ".tool-count", "#directory-count"];
+  const counterSelectors = ["#toolCount", "#total-tools-count", ".tool-count"];
   counterSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
-      if (el.id === "toolCount" || el.classList.contains("tool-count")) {
-        el.textContent = `${TOOLS_DATA.length}+`;
-      }
+      el.textContent = `${TOOLS_DATA.length}+`;
     });
   });
 }
 
-// 2. Card HTML Generator (FinStack CSS Compatible)
 function buildToolCard(tool) {
   const card = document.createElement("div");
   card.className = "card";
@@ -46,12 +41,12 @@ function buildToolCard(tool) {
         <span class="pill">${esc(tool.category)}</span>
         <h3>${esc(tool.name)}</h3>
       </div>
-      <div style="font-weight:700; color:var(--primary, #0f766e);">★ ${tool.rating || 4.5}</div>
+      <div style="font-weight:700; color:#0284c7; font-size:0.9rem;">★ ${tool.rating || 4.5}</div>
     </div>
     <p>${esc(tool.tagline || tool.description)}</p>
     <div class="meta-row"><strong>Best for:</strong> <span>${esc(tool.bestFor || "UK Businesses")}</span></div>
     <div class="meta-row"><strong>Pricing:</strong> <span>${esc(tool.pricing || "Transparent")}</span></div>
-    <div class="actions" style="margin-top:16px; display:flex; gap:8px;">
+    <div class="actions">
       <a class="btn btn-secondary" href="tool.html?id=${encodeURIComponent(tool.id)}">Profile</a>
       <a class="btn" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer">Visit ↗</a>
     </div>
@@ -59,23 +54,21 @@ function buildToolCard(tool) {
   return card;
 }
 
-// 3. Page Initialiser
 function initPageControllers() {
-  const isHomepage = !!document.querySelector(".hero") || window.location.pathname.endsWith("index.html") || window.location.pathname === "/";
-  const isDirectory = !!document.getElementById("search") || !!document.getElementById("directory-search") || window.location.pathname.endsWith("tools.html");
-  const isFinder = !!document.getElementById("finderForm") || !!document.getElementById("finder-form") || window.location.pathname.endsWith("finder.html");
-  const isProfile = !!document.getElementById("toolProfile") || !!document.getElementById("tool-profile-container") || window.location.pathname.endsWith("tool.html");
+  const hasHero = !!document.querySelector(".hero");
+  const isDirectory = !!document.getElementById("search") || window.location.pathname.endsWith("tools.html");
+  const isFinder = !!document.getElementById("finderForm") || window.location.pathname.endsWith("finder.html");
+  const isProfile = !!document.getElementById("toolProfile") || window.location.pathname.endsWith("tool.html");
 
-  if (isHomepage) initHomepage();
+  if (hasHero) initHomepage();
   if (isDirectory) initDirectory();
   if (isFinder) initFinder();
   if (isProfile) initProfile();
 }
 
-// 4. Homepage Logic
 function initHomepage() {
   const grid = document.getElementById("toolGrid") || document.getElementById("featured-tools-grid");
-  const empty = document.getElementById("empty") || document.getElementById("empty-state");
+  const empty = document.getElementById("empty");
 
   if (!grid) return;
   if (empty) empty.style.display = "none";
@@ -85,17 +78,15 @@ function initHomepage() {
   featured.forEach(tool => grid.appendChild(buildToolCard(tool)));
 }
 
-// 5. Directory Page Logic
 function initDirectory() {
   const grid = document.getElementById("toolGrid") || document.getElementById("tools-grid");
-  const searchInput = document.getElementById("search") || document.getElementById("directory-search") || document.querySelector('input[type="search"]');
-  const catSelect = document.getElementById("cat") || document.getElementById("category-filter") || document.getElementById("categorySelect");
-  const empty = document.getElementById("empty") || document.getElementById("empty-state");
+  const searchInput = document.getElementById("search") || document.getElementById("directory-search");
+  const catSelect = document.getElementById("cat") || document.getElementById("category-filter");
+  const empty = document.getElementById("empty");
   const countEl = document.getElementById("resultsCount") || document.getElementById("directory-count");
 
   if (!grid) return;
 
-  // Read URL params
   const urlParams = new URLSearchParams(window.location.search);
   const initialCat = urlParams.get("cat") || urlParams.get("category");
   const initialQuery = urlParams.get("q") || urlParams.get("search");
@@ -125,7 +116,7 @@ function initDirectory() {
         chosenCat.toLowerCase() === "all" ||
         tool.category.toLowerCase() === chosenCat.toLowerCase();
 
-      const searchCorpus = `${tool.name} ${tool.category} ${tool.tagline} ${tool.description} ${tool.bestFor} ${tool.tags ? tool.tags.join(" ") : ""}`.toLowerCase();
+      const searchCorpus = `${tool.name} ${tool.category} ${tool.tagline} ${tool.description} ${tool.bestFor} ${(tool.tags || []).join(" ")}`.toLowerCase();
       const matchQuery = !q || searchCorpus.includes(q);
 
       return matchCat && matchQuery;
@@ -144,16 +135,15 @@ function initDirectory() {
   if (searchInput) searchInput.addEventListener("input", render);
   if (catSelect) catSelect.addEventListener("change", render);
 
-  // Initial immediate render
   render();
 }
 
-// 6. Finder Engine
 function initFinder() {
-  const form = document.getElementById("finderForm") || document.getElementById("finder-form") || document.querySelector("form");
-  const resultsContainer = document.getElementById("results") || document.getElementById("finder-results") || document.getElementById("shortlist-grid");
+  const form = document.getElementById("finderForm") || document.querySelector("form");
+  const resultsWrapper = document.getElementById("results");
+  const grid = document.getElementById("shortlist-grid") || resultsWrapper;
 
-  if (!form || !resultsContainer) return;
+  if (!form || !resultsWrapper) return;
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -182,24 +172,21 @@ function initFinder() {
       .sort((a, b) => b.score - a.score)
       .slice(0, 4);
 
-    const finalTarget = document.getElementById("shortlist-grid") || resultsContainer;
-    finalTarget.innerHTML = "";
+    grid.innerHTML = "";
 
     if (shortlist.length === 0) {
-      finalTarget.innerHTML = "<p>No exact match found. Try selecting broader options or explore the full directory.</p>";
+      grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 20px;'>No exact match found. Try broader options.</p>";
     } else {
-      shortlist.forEach(tool => finalTarget.appendChild(buildToolCard(tool)));
+      shortlist.forEach(tool => grid.appendChild(buildToolCard(tool)));
     }
 
-    const wrapper = document.getElementById("finder-results") || resultsContainer;
-    wrapper.style.display = "block";
-    wrapper.scrollIntoView({ behavior: "smooth" });
+    resultsWrapper.style.display = "block";
+    resultsWrapper.scrollIntoView({ behavior: "smooth" });
   });
 }
 
-// 7. Dynamic Profile Page (tool.html)
 function initProfile() {
-  const target = document.getElementById("toolProfile") || document.getElementById("tool-profile-container") || document.getElementById("profile");
+  const target = document.getElementById("toolProfile");
   if (!target) return;
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -210,36 +197,36 @@ function initProfile() {
     target.innerHTML = `
       <div style="padding:40px 0; text-align:center;">
         <h2>Tool Not Found</h2>
-        <p>The selected provider does not exist or has moved.</p>
-        <a class="btn" href="tools.html" style="margin-top:16px;">View all tools</a>
+        <p style="margin: 12px 0 20px 0; color: #64748b;">The selected provider does not exist or has moved.</p>
+        <a class="btn" href="tools.html">View all tools</a>
       </div>
     `;
     return;
   }
 
-  document.title = `${tool.name} Review & Details | FinStack UK`;
+  document.title = `${tool.name} Review & Pricing | FinStack UK`;
 
   target.innerHTML = `
-    <div style="margin-bottom:24px;">
+    <div style="margin-bottom:28px;">
       <span class="pill">${esc(tool.category)}</span>
-      <h1 style="margin:12px 0 6px 0;">${esc(tool.name)}</h1>
+      <h1 style="font-size: 2.25rem; font-weight:800; margin:10px 0 6px 0;">${esc(tool.name)}</h1>
       <p style="font-size:1.15rem; color:#475569;">${esc(tool.tagline)}</p>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
-      <div style="background:#fff; border:1px solid var(--border, #e2e8f0); border-radius:12px; padding:24px;">
-        <h3>Overview</h3>
-        <p style="margin-top:12px; line-height:1.6;">${esc(tool.description)}</p>
-        <h4 style="margin-top:20px;">Key Features</h4>
-        <ul style="margin-top:10px; padding-left:20px; line-height:1.8;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px;">
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1.25rem; margin-bottom:12px;">Overview</h3>
+        <p style="line-height:1.6; color:#475569;">${esc(tool.description)}</p>
+        <h4 style="margin-top:24px; margin-bottom:10px; font-size:1.05rem;">Key Features</h4>
+        <ul style="padding-left:20px; line-height:1.8; color:#334155;">
           ${(tool.features || []).map(f => `<li>${esc(f)}</li>`).join("")}
         </ul>
       </div>
-      <div style="background:#fff; border:1px solid var(--border, #e2e8f0); border-radius:12px; padding:24px; height:fit-content;">
-        <h3>Summary</h3>
-        <div class="meta-row" style="margin-top:16px;"><strong>Best for:</strong> <span>${esc(tool.bestFor)}</span></div>
-        <div class="meta-row" style="margin-top:8px;"><strong>Pricing:</strong> <span>${esc(tool.pricing)}</span></div>
-        <div class="meta-row" style="margin-top:8px;"><strong>Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0</span></div>
-        <a class="btn" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center; margin-top:24px;">Visit Official Site ↗</a>
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; height:fit-content; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1.25rem; margin-bottom:16px;">Summary</h3>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Best for:</strong> <span>${esc(tool.bestFor)}</span></div>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Pricing:</strong> <span>${esc(tool.pricing)}</span></div>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0</span></div>
+        <a class="btn btn-block" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" style="margin-top:24px; height:46px;">Visit Official Site ↗</a>
       </div>
     </div>
   `;
