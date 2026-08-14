@@ -1,0 +1,35 @@
+<!doctype html><html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Find My Business Tools | FinStack UK</title>
+<meta name="description" content="Answer a few questions to get a shortlist of UK SME financial software and fintech tools.">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<nav class="nav"><div class="nav-inner"><a class="logo" href="index.html">FinStack<span>.uk</span></a><div class="navlinks"><a href="tools.html">Directory</a><a href="methodology.html">Methodology</a><a class="nav-cta" href="for-providers.html">For providers</a></div></div></nav>
+<header class="page-hero"><div class="page-hero-inner"><span class="eyebrow">Free tool finder</span><h1>Build your starting shortlist.</h1><p>Tell us what kind of business you run and what you need. This is a discovery aid, not financial or legal advice.</p></div></header>
+<main class="finder">
+<div class="question"><h3>1. What describes your business?</h3><div class="options" data-group="business"><button class="option" data-v="sole">Sole trader / freelancer</button><button class="option" data-v="limited">Limited company</button><button class="option" data-v="startup">Startup</button><button class="option" data-v="ecommerce">Ecommerce</button></div></div>
+<div class="question"><h3>2. What do you need?</h3><div class="options" data-group="need"><button class="option" data-v="accounting">Accounting</button><button class="option" data-v="banking">Business banking</button><button class="option" data-v="payments">Payments</button><button class="option" data-v="lending">Funding</button><button class="option" data-v="tax">Tax / compliance</button><button class="option" data-v="payroll">Payroll</button><button class="option" data-v="expenses">Expenses</button></div></div>
+<div class="question"><h3>3. What's your priority?</h3><div class="options" data-group="priority"><button class="option" data-v="simple">Simple setup</button><button class="option" data-v="automation">Automation</button><button class="option" data-v="international">International</button><button class="option" data-v="growth">Growing business</button></div></div>
+<button class="btn" id="findBtn">Show my shortlist →</button>
+<div class="results" id="results"></div>
+</main>
+<footer class="footer"><div class="footer-inner"><div><strong>FinStack.uk</strong><small>Independent directory.</small></div><div><a href="index.html">Home</a> · <a href="tools.html">Directory</a> · <a href="privacy.html">Privacy</a></div></div></footer>
+<script src="js/tools.js"></script>
+<script>
+const selected={};
+document.querySelectorAll(".options").forEach(group=>group.addEventListener("click",e=>{
+ if(!e.target.classList.contains("option"))return;
+ group.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
+ e.target.classList.add("selected"); selected[group.dataset.group]=e.target.dataset.v;
+}));
+document.getElementById("findBtn").addEventListener("click",()=>{
+ const need=selected.need; const priority=selected.priority;
+ let list=[...FINSTACK_TOOLS];
+ const catMap={accounting:"Accounting",banking:"Business Banking",payments:"Payments",lending:"Lending",tax:"Tax & Compliance",payroll:"Payroll",expenses:"Expenses"};
+ if(catMap[need]) list=list.filter(t=>t.cat===catMap[need]);
+ if(priority==="international") list=list.filter(t=>t.tags.some(x=>/international|multi-currency|global/i.test(x)));
+ if(!list.length) list=[...FINSTACK_TOOLS];
+ list=list.slice(0,5);
+ document.getElementById("results").innerHTML=`<h2>Your starting shortlist</h2><p style="color:#64748b;margin:5px 0 15px">Use this as a discovery shortlist and verify current pricing, eligibility and features with each provider.</p>`+
+ list.map(t=>`<div class="result-card"><div><span class="pill">${t.cat}</span><h3>${t.name}</h3><p style="color:#64748b;font-size:.85rem">${t.best}</p></div><a class="btn" href="tool.html?id=${encodeURIComponent(t.id)}">View</a></div>`).join("");
+ window.scrollTo({top:document.getElementById("results").offsetTop-40,behavior:"smooth"});
+});
+</script></body></html>
