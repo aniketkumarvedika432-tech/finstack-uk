@@ -1,9 +1,63 @@
-<!doctype html><html lang="en-GB"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UK Fintech & SME Software Directory | FinStack UK</title><meta name="description" content="Browse and filter UK-focused accounting, banking, payments, lending, payroll, expense and compliance tools.">
-<link rel="stylesheet" href="css/style.css"></head><body>
-<nav class="nav"><div class="nav-inner"><a class="logo" href="index.html">FinStack<span>.uk</span></a><div class="navlinks"><a href="finder.html">Find my tools</a><a href="methodology.html">Methodology</a><a class="nav-cta" href="for-providers.html">For providers</a></div></div></nav>
-<header class="page-hero"><div class="page-hero-inner"><span class="eyebrow">Directory</span><h1>UK business tools</h1><p>Search and filter a structured shortlist of fintech, accounting, payments, lending, payroll and compliance providers.</p></div></header>
-<main class="container"><div class="toolbar"><input id="toolSearch" class="search" type="search" placeholder="Search Xero, VAT, banking, invoices..."><select id="toolCategory" class="select"></select></div><div class="grid" id="toolGrid"></div><p class="empty" id="empty">No tools match your search.</p></main>
-<footer class="footer"><div class="footer-inner"><div><strong>FinStack.uk</strong><small>Independent directory.</small></div><div><a href="index.html">Home</a> · <a href="for-providers.html">For providers</a> · <a href="privacy.html">Privacy</a></div></div></footer>
-<script src="js/tools.js"></script><script src="js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Directory of UK Financial Tools | FinStack UK</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">FinStack<span>.uk</span></a>
+      <nav class="nav-links">
+        <a href="tools.html" class="active">Directory</a>
+        <a href="finder.html">Find My Tool</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <div class="page-header">
+      <h1>UK Business Finance Tools Directory</h1>
+      <p>Search and compare verified accounting, banking, payment, and expense solutions.</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-controls">
+      <input type="text" id="directory-search" placeholder="Search by name, feature (e.g. VAT, international)..." class="search-input">
+      <select id="category-filter" class="category-select">
+        <option value="All">All Categories</option>
+        <option value="Accounting">Accounting</option>
+        <option value="Banking">Banking</option>
+        <option value="Payments">Payments</option>
+        <option value="Expenses">Expenses</option>
+        <option value="Payroll">Payroll</option>
+        <option value="Compliance">Compliance</option>
+      </select>
+    </div>
+
+    <div class="directory-status">
+      <span id="directory-count">Loading tools...</span>
+    </div>
+
+    <!-- Dynamic Target Grid -->
+    <div id="tools-grid" class="tools-grid"></div>
+
+    <div id="empty-state" class="empty-state" style="display: none; text-align: center; padding: 40px;">
+      <h3>No tools match your criteria</h3>
+      <p>Try clearing your search terms or selecting a different category filter.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 FinStack UK. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/tools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
