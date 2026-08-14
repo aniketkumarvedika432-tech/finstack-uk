@@ -1,7 +1,14 @@
 /**
- * Master Database for FinStack UK
- * Source of Truth for Homepage, Directory, Finder, and Profiles
+ * FinStack UK - Verified Data Architecture
+ * Central Source of Truth for 40+ UK SME Financial Tools
  */
+
+const MONETISATION_CONFIG = {
+  defaultAttributionParam: "ref",
+  defaultAttributionValue: "finstack",
+  enableClickLogging: true
+};
+
 const TOOLS_DATA = [
   {
     id: "xero",
@@ -580,5 +587,5 @@ const TOOLS_DATA = [
 ];
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { TOOLS_DATA };
+  module.exports = { TOOLS_DATA, MONETISATION_CONFIG };
 }
