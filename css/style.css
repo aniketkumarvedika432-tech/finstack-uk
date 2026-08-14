@@ -1,19 +1,14 @@
-/* ==========================================================================
-   FinStack UK - Master Design System
-   Modern, conversion-optimised fintech & SME directory theme
-   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --bg-page: #f8fafc;
-  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
   --text-dark: #0f172a;
   --text-body: #334155;
   --text-muted: #64748b;
-  --text-subtle: #94a3b8;
   --brand: #0284c7;
   --brand-hover: #0369a1;
-  --brand-dark: #0f172a;
   --brand-light: #f0f9ff;
   --brand-border: #bae6fd;
   --border: #e2e8f0;
@@ -22,7 +17,6 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
   --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
 }
@@ -34,7 +28,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font);
   background-color: var(--bg-page);
   color: var(--text-body);
   line-height: 1.5;
@@ -47,7 +41,9 @@ body {
   padding: 0 20px;
 }
 
-/* NAVIGATION */
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
 .nav {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
@@ -85,7 +81,7 @@ body {
 }
 
 .navlinks a {
-  font-size: 0.925rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-muted);
   text-decoration: none;
@@ -109,7 +105,9 @@ body {
   background: #1e293b !important;
 }
 
-/* HERO SECTION */
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
 .hero {
   background: #ffffff;
   border-bottom: 1px solid var(--border);
@@ -172,6 +170,16 @@ body {
   gap: 12px;
 }
 
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    height: 46px;
+  }
+}
+
 .hero-card {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -210,12 +218,16 @@ body {
   font-weight: 700;
 }
 
-/* SECTION HEADERS */
+/* ==========================================================================
+   SECTION HEADERS
+   ========================================================================== */
 .section-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin: 56px 0 24px 0;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .section-head h1, .section-head h2 {
@@ -231,7 +243,9 @@ body {
   margin-top: 4px;
 }
 
-/* CATEGORIES */
+/* ==========================================================================
+   CATEGORIES GRID
+   ========================================================================== */
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -269,7 +283,9 @@ body {
   margin-top: 4px;
 }
 
-/* TOOLS GRID & CARDS */
+/* ==========================================================================
+   TOOL GRID & CARDS (10/10 DUAL-TONE BRAND AVATARS)
+   ========================================================================== */
 .tools-wrap {
   padding: 8px 0 56px 0;
 }
@@ -289,6 +305,7 @@ body {
   flex-direction: column;
   box-shadow: var(--shadow-card);
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .card:hover {
@@ -302,6 +319,30 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 12px;
+  gap: 12px;
+}
+
+.card-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Monogram Logo Avatar */
+.brand-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .pill {
@@ -312,23 +353,24 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: var(--radius-full);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .card h3 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-dark);
   letter-spacing: -0.3px;
+  line-height: 1.3;
 }
 
 .card p {
   color: var(--text-body);
   font-size: 0.925rem;
   line-height: 1.55;
-  margin-bottom: 16px;
+  margin: 12px 0 16px 0;
   flex-grow: 1;
 }
 
@@ -351,12 +393,20 @@ body {
   border-top: 1px solid var(--border-subtle);
 }
 
-/* BUTTONS */
+@media (max-width: 480px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-weight: 600;
   font-size: 0.9rem;
   height: 42px;
@@ -398,7 +448,9 @@ body {
   width: 100%;
 }
 
-/* CONTROLS & FINDER */
+/* ==========================================================================
+   FILTER CONTROLS (STICKY MOBILE HUD)
+   ========================================================================== */
 .filter-controls {
   display: grid;
   grid-template-columns: 1fr 240px;
@@ -409,6 +461,12 @@ body {
 @media (max-width: 640px) {
   .filter-controls {
     grid-template-columns: 1fr;
+    position: sticky;
+    top: 70px;
+    z-index: 90;
+    background: var(--bg-page);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -416,7 +474,7 @@ body {
   width: 100%;
   height: 48px;
   padding: 0 16px;
-  font-family: var(--font-sans);
+  font-family: var(--font);
   font-size: 0.95rem;
   color: var(--text-dark);
   background: #ffffff;
@@ -432,6 +490,9 @@ select:focus, input[type="text"]:focus {
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
 
+/* ==========================================================================
+   FINDER CARD & COMPARISON TABLE (10/10 ASSET UPGRADE)
+   ========================================================================== */
 .finder-card {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -454,6 +515,32 @@ select:focus, input[type="text"]:focus {
   margin-bottom: 8px;
 }
 
+.comparison-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.comparison-matrix th, .comparison-matrix td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.comparison-matrix th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   FEATURE BANNER & FOOTER
+   ========================================================================== */
 .feature {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
@@ -526,7 +613,6 @@ select:focus, input[type="text"]:focus {
   color: var(--text-muted);
 }
 
-/* FOOTER */
 .footer {
   background: #ffffff;
   border-top: 1px solid var(--border);
@@ -555,20 +641,10 @@ select:focus, input[type="text"]:focus {
   color: var(--brand);
 }
 
-@/* Add at the bottom of css/style.css for ultra-narrow mobile refinement */
-@media (max-width: 480px) {
-  .hero-actions {
+@media (max-width: 640px) {
+  .footer-inner {
     flex-direction: column;
-    width: 100%;
-  }
-  .hero-actions .btn {
-    width: 100%;
-    height: 46px;
-  }
-  .filter-controls {
-    grid-template-columns: 1fr;
-  }
-  .actions {
-    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
   }
 }
