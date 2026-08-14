@@ -1,59 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Directory of UK Financial Tools | FinStack UK</title>
+  <meta name="description" content="Search and compare verified UK business finance tools.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">FinStack<span>.uk</span></a>
-      <nav class="nav-links">
-        <a href="tools.html" class="active">Directory</a>
-        <a href="finder.html">Find My Tool</a>
-        <a href="about.html">About</a>
-      </nav>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">FinStack<span>.uk</span></a>
+      <div class="navlinks">
+        <a href="tools.html" class="active">Tools</a>
+        <a href="finder.html">Find my tools</a>
+        <a href="methodology.html">Methodology</a>
+        <a class="nav-cta" href="for-providers.html">For providers</a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <main class="container page-content">
-    <div class="page-header">
-      <h1>UK Business Finance Tools Directory</h1>
-      <p>Search and compare verified accounting, banking, payment, and expense solutions.</p>
+  <main class="container">
+    <div class="section-head">
+      <div>
+        <h1>UK Business Finance Tools Directory</h1>
+        <p>Search, filter, and compare UK accounting, banking, payment, and expense solutions.</p>
+      </div>
     </div>
 
-    <!-- Filter Bar -->
     <div class="filter-controls">
-      <input type="text" id="directory-search" placeholder="Search by name, feature (e.g. VAT, international)..." class="search-input">
-      <select id="category-filter" class="category-select">
-        <option value="All">All Categories</option>
+      <input type="text" id="search" placeholder="Search by name or feature (e.g. VAT, international)..." class="search-input">
+      <select id="cat" class="category-select">
+        <option value="all">All Categories</option>
         <option value="Accounting">Accounting</option>
-        <option value="Banking">Banking</option>
+        <option value="Business Banking">Business Banking</option>
         <option value="Payments">Payments</option>
         <option value="Expenses">Expenses</option>
         <option value="Payroll">Payroll</option>
-        <option value="Compliance">Compliance</option>
+        <option value="Lending">Lending</option>
+        <option value="Tax & Compliance">Tax & Compliance</option>
+        <option value="Billing">Billing</option>
       </select>
     </div>
 
-    <div class="directory-status">
-      <span id="directory-count">Loading tools...</span>
-    </div>
+    <div style="margin-bottom: 20px; font-weight: 600; color: var(--text-muted);" id="resultsCount">Loading tools...</div>
 
-    <!-- Dynamic Target Grid -->
-    <div id="tools-grid" class="tools-grid"></div>
-
-    <div id="empty-state" class="empty-state" style="display: none; text-align: center; padding: 40px;">
-      <h3>No tools match your criteria</h3>
-      <p>Try clearing your search terms or selecting a different category filter.</p>
-    </div>
+    <div class="grid" id="toolGrid"></div>
+    <p class="empty" id="empty">No tools match your search criteria.</p>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 FinStack UK. All rights reserved.</p>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><strong>FinStack.uk</strong><br><small>Independent UK fintech and SME software directory.</small></div>
+      <div><a href="about.html">About</a> · <a href="methodology.html">Methodology</a> · <a href="for-providers.html">For providers</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
     </div>
   </footer>
 
