@@ -1,392 +1,584 @@
-(function () {
-    "use strict";
+/**
+ * Master Database for FinStack UK
+ * Source of Truth for Homepage, Directory, Finder, and Profiles
+ */
+const TOOLS_DATA = [
+  {
+    id: "xero",
+    name: "Xero",
+    category: "Accounting",
+    tagline: "Cloud accounting software designed for small businesses and accountants.",
+    description: "Xero provides automated bank feeds, invoicing, VAT return filing (MTD-ready), and payroll integration. Widely supported by UK accountants.",
+    pricing: "From £15/mo",
+    bestFor: "Sole traders, Small LTDs, Growing businesses",
+    features: ["MTD VAT Filing", "Bank Feeds", "Invoicing", "Expense Tracking", "Multi-currency"],
+    tags: ["accounting", "vat", "mtd", "invoicing", "sole-trader", "limited-company", "low-cost"],
+    website: "https://www.xero.com/uk/",
+    featured: true,
+    rating: 4.8
+  },
+  {
+    id: "quickbooks",
+    name: "QuickBooks Online",
+    category: "Accounting",
+    tagline: "Comprehensive accounting tool with strong mileage and tax tracking.",
+    description: "Intuit QuickBooks covers bookkeeping, cash flow forecasting, CIS tracking, and HMRC-recognised Making Tax Digital VAT returns.",
+    pricing: "From £10/mo",
+    bestFor: "Contractors, Tradespeople, Small businesses",
+    features: ["Mileage Tracker", "CIS Tracking", "MTD VAT", "Automated Reports"],
+    tags: ["accounting", "vat", "mtd", "cis", "sole-trader", "limited-company"],
+    website: "https://quickbooks.intuit.com/uk/",
+    featured: true,
+    rating: 4.7
+  },
+  {
+    id: "freeagent",
+    name: "FreeAgent",
+    category: "Accounting",
+    tagline: "Intuitive accounting software free for NatWest/RBS business account holders.",
+    description: "Built specifically for UK freelancers and micro-businesses. Direct corporation tax, Self Assessment, and payroll filings straight to HMRC.",
+    pricing: "From £19/mo (or Free with NatWest/RBS/Mettle)",
+    bestFor: "Freelancers, Sole traders, Micro LTDs",
+    features: ["Self Assessment Filing", "Corporation Tax", "Free with banking partners", "Time Tracking"],
+    tags: ["accounting", "freelance", "sole-trader", "limited-company", "tax", "free-tier"],
+    website: "https://www.freeagent.com/",
+    featured: true,
+    rating: 4.8
+  },
+  {
+    id: "sage",
+    name: "Sage Accounting",
+    category: "Accounting",
+    tagline: "Reliable compliance and accounting engine for UK enterprises.",
+    description: "Offers structured financial management, payroll compliance, and multi-entity consolidation for established UK businesses.",
+    pricing: "From £14/mo",
+    bestFor: "Established LTDs, Multi-currency operations",
+    features: ["Inventory Tracking", "MTD Compliance", "Multi-entity support", "Automated Bank Recs"],
+    tags: ["accounting", "enterprise", "compliance", "limited-company", "vat"],
+    website: "https://www.sage.com/en-gb/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "clearbooks",
+    name: "Clear Books",
+    category: "Accounting",
+    tagline: "Simple and approachable cloud accounting software for small UK teams.",
+    description: "Clear Books provides easy-to-read financial reports, MTD VAT filing, and automated invoice reminders without complicated jargon.",
+    pricing: "From £12/mo",
+    bestFor: "Micro businesses, Non-financial founders",
+    features: ["Easy Invoicing", "VAT Submissions", "Dividend Vouchers", "CIS Reports"],
+    tags: ["accounting", "vat", "sole-trader", "low-cost"],
+    website: "https://www.clearbooks.co.uk/",
+    featured: false,
+    rating: 4.4
+  },
+  {
+    id: "revolut-business",
+    name: "Revolut Business",
+    category: "Banking",
+    tagline: "Global business accounts with multi-currency exchange and modern corporate cards.",
+    description: "Enables multi-currency holding accounts, virtual/physical team expense cards, and seamless integration with major accounting tools.",
+    pricing: "Free tier available; Paid plans from £19/mo",
+    bestFor: "International companies, E-commerce, Startups",
+    features: ["Multi-currency FX", "Corporate Cards", "API Integration", "Spend Controls"],
+    tags: ["banking", "international", "fx", "cards", "ecommerce", "free-tier"],
+    website: "https://www.revolut.com/business/",
+    featured: true,
+    rating: 4.7
+  },
+  {
+    id: "wise-business",
+    name: "Wise Business",
+    category: "Banking",
+    tagline: "Cheapest mid-market exchange rate banking alternative for global trade.",
+    description: "Receive international transfers with local account numbers (GBP, EUR, USD) and pay invoices globally without markup.",
+    pricing: "One-off setup fee (£45)",
+    bestFor: "Cross-border trade, Freelancers with global clients, Importers/Exporters",
+    features: ["Local Bank Details", "Mid-market FX", "Batch Payments", "Accounting Sync"],
+    tags: ["banking", "international", "fx", "freelance", "low-cost"],
+    website: "https://wise.com/gb/business/",
+    featured: true,
+    rating: 4.9
+  },
+  {
+    id: "tide",
+    name: "Tide",
+    category: "Banking",
+    tagline: "Fast UK business current accounts with built-in invoicing and company formation.",
+    description: "Open an account in minutes with no credit checks, set up instant sub-accounts for tax savings, and register a new LTD company directly.",
+    pricing: "Free core tier; Paid from £9.99/mo",
+    bestFor: "Sole traders, New startups, Fast account creation",
+    features: ["Free Company Registration", "Auto-categorisation", "Sub-accounts", "Instant Invoicing"],
+    tags: ["banking", "sole-trader", "startups", "free-tier", "low-cost"],
+    website: "https://www.tide.co/",
+    featured: true,
+    rating: 4.6
+  },
+  {
+    id: "starling-bank",
+    name: "Starling Bank",
+    category: "Banking",
+    tagline: "Award-winning, fully regulated UK digital business bank account with £0 monthly fee.",
+    description: "FSCS-protected banking with 24/7 UK customer support, integrated marketplace, and built-in toolkit for automated bookkeeping.",
+    pricing: "Free core tier; Business Toolkit £7/mo",
+    bestFor: "UK SMEs, Sole traders, Startups",
+    features: ["FSCS Protected", "24/7 Support", "Zero Monthly Fee", "Real-time Notifications"],
+    tags: ["banking", "sole-trader", "limited-company", "free-tier", "low-cost"],
+    website: "https://www.starlingbank.com/business-account/",
+    featured: true,
+    rating: 4.9
+  },
+  {
+    id: "monzo-business",
+    name: "Monzo Business",
+    category: "Banking",
+    tagline: "Mobile-first banking with automated tax pots and integrated invoicing.",
+    description: "Separates tax automatically with 'Tax Pots', syncs directly to Xero/QuickBooks, and provides multi-user access for limited companies.",
+    pricing: "Free tier; Pro £5/mo",
+    bestFor: "Mobile entrepreneurs, Freelancers, Micro-businesses",
+    features: ["Tax Pots", "Integrated Invoicing", "Multi-user Access", "Xero Integration"],
+    tags: ["banking", "tax", "sole-trader", "freelance", "low-cost", "free-tier"],
+    website: "https://monzo.com/business/",
+    featured: false,
+    rating: 4.7
+  },
+  {
+    id: "stripe",
+    name: "Stripe",
+    category: "Payments",
+    tagline: "The developer standard payment gateway for global online commerce.",
+    description: "Accept credit cards, mobile wallets, recurring subscriptions, and localized payment methods across web and mobile apps.",
+    pricing: "1.5% + 20p for standard UK cards",
+    bestFor: "SaaS, E-commerce, Tech startups",
+    features: ["Subscription Billing", "Fraud Prevention (Radar)", "Global Payments", "Custom Checkout"],
+    tags: ["payments", "ecommerce", "saas", "subscriptions", "developer"],
+    website: "https://stripe.com/gb",
+    featured: true,
+    rating: 4.8
+  },
+  {
+    id: "gocardless",
+    name: "GoCardless",
+    category: "Payments",
+    tagline: "Direct Debit payment solution optimized for recurring retainer and invoice collection.",
+    description: "Drastically reduce payment churn and processing fees by collecting recurring bank-to-bank payments directly from customer accounts.",
+    pricing: "1% + 20p per transaction (capped)",
+    bestFor: "B2B agencies, Subscription businesses, Accountancy firms",
+    features: ["Direct Debit", "Instant Bank Pay (Open Banking)", "Low Transaction Fees", "Auto Reconciliation"],
+    tags: ["payments", "subscriptions", "b2b", "low-cost"],
+    website: "https://gocardless.com/",
+    featured: true,
+    rating: 4.7
+  },
+  {
+    id: "sumup",
+    name: "SumUp",
+    category: "Payments",
+    tagline: "Affordable POS card readers and payment terminals for in-person transactions.",
+    description: "No monthly fixed fees, simple pocket card terminals, and rapid payouts for pop-up shops, market vendors, and tradespeople.",
+    pricing: "1.69% per in-person transaction; No monthly fee",
+    bestFor: "Retail, Cafes, Mobile services, Trades",
+    features: ["No Monthly Contracts", "Pocket Terminals", "Virtual Invoices", "Quick Setup"],
+    tags: ["payments", "pos", "retail", "sole-trader", "low-cost"],
+    website: "https://www.sumup.com/en-gb/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "zettle",
+    name: "Zettle by PayPal",
+    category: "Payments",
+    tagline: "Comprehensive point-of-sale hardware and inventory management for physical stores.",
+    description: "Fast-loading mobile checkout, hardware bundles, and inventory synchronization with seamless PayPal settlement.",
+    pricing: "1.75% per card transaction",
+    bestFor: "Hospitality, Brick-and-mortar retail, Event stalls",
+    features: ["POS Software", "Inventory Sync", "Barcode Scanning", "Daily Payouts"],
+    tags: ["payments", "pos", "retail", "hospitality"],
+    website: "https://www.zettle.com/gb",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "dext",
+    name: "Dext Prepare",
+    category: "Expenses",
+    tagline: "Automated receipt capture and paperwork extraction for zero-data-entry bookkeeping.",
+    description: "Snap receipts on mobile or auto-forward digital bills. Extracts line items, VAT, and supplier info directly to your accounting tool.",
+    pricing: "From £27/mo",
+    bestFor: "SMEs with high invoice volume, Accountants, Bookkeepers",
+    features: ["OCR Receipt Extraction", "Approval Workflows", "Line-item Detail", "Audit-ready Cloud Vault"],
+    tags: ["expenses", "vat", "receipts", "automation", "compliance"],
+    website: "https://dext.com/uk",
+    featured: true,
+    rating: 4.7
+  },
+  {
+    id: "pleo",
+    name: "Pleo",
+    category: "Expenses",
+    tagline: "Smart company cards paired with automated real-time expense reporting.",
+    description: "Distribute prepaid Mastercard smart cards to staff with custom spending limits, instant receipt capture prompts, and zero mileage paperwork.",
+    pricing: "Free plan available; Paid from £39/mo",
+    bestFor: "Growing teams (5-100 employees), Tech firms, Agencies",
+    features: ["Individual Spending Limits", "Instant Receipt Alerts", "Mileage Tracking", "Accounting Integration"],
+    tags: ["expenses", "cards", "limited-company", "teams"],
+    website: "https://www.pleo.io/en-gb",
+    featured: true,
+    rating: 4.8
+  },
+  {
+    id: "soldo",
+    name: "Soldo",
+    category: "Expenses",
+    tagline: "Prepaid business cards with centralized multi-user expense control architecture.",
+    description: "Provides granular spending rules, multi-currency wallets, and company-wide budget delegation for operations teams.",
+    pricing: "From £30/mo",
+    bestFor: "Mid-sized UK businesses, Multi-department teams",
+    features: ["Multi-currency Wallets", "Granular Budgets", "Approval Flow", "Custom Rules"],
+    tags: ["expenses", "cards", "enterprise", "teams"],
+    website: "https://www.soldo.com/en-gb/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "expensify",
+    name: "Expensify",
+    category: "Expenses",
+    tagline: "Receipt scanning, corporate travel management, and personal expense reimbursements.",
+    description: "One-click receipt scanning (SmartScan), corporate card tracking, and automatic reimbursement through direct bank transfers.",
+    pricing: "From £4.50/user/mo",
+    bestFor: "Remote teams, Traveling staff, Consultancies",
+    features: ["SmartScan OCR", "Next-day Reimbursements", "Travel Booking", "Multi-level Approvals"],
+    tags: ["expenses", "receipts", "travel", "teams"],
+    website: "https://use.expensify.com/",
+    featured: false,
+    rating: 4.4
+  },
+  {
+    id: "brightpay",
+    name: "BrightPay",
+    category: "Payroll",
+    tagline: "Desktop and cloud UK payroll software handling RTI, Auto-enrolment, and CIS.",
+    description: "Fully compliant payroll solution built for the UK market with direct HMRC RTI submission and automatic workplace pension communication.",
+    pricing: "From £109/year",
+    bestFor: "In-house payroll teams, Small businesses with employees",
+    features: ["HMRC RTI Submissions", "Auto-enrolment Pensions", "CIS Calculations", "Employee Self-service Portal"],
+    tags: ["payroll", "pensions", "cis", "compliance", "limited-company"],
+    website: "https://www.brightpay.co.uk/",
+    featured: false,
+    rating: 4.8
+  },
+  {
+    id: "employment-hero",
+    name: "Employment Hero Payroll",
+    category: "Payroll",
+    tagline: "Automated cloud payroll and all-in-one HR system for scaling businesses.",
+    description: "Combines time-sheeting, roster planning, auto-pay runs, and statutory leave calculations in an integrated employee app.",
+    pricing: "From £5/employee/mo",
+    bestFor: "Growing SMEs, Shift-based companies, Remote teams",
+    features: ["Shift Scheduling", "Automated Timesheets", "RTI Submissions", "Pension Integrations"],
+    tags: ["payroll", "hr", "teams", "compliance"],
+    website: "https://employmenthero.com/uk/payroll/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "payfit",
+    name: "PayFit",
+    category: "Payroll",
+    tagline: "Automated payroll management with intuitive employee portal and HR tools.",
+    description: "Simplifies UK payroll runs, payslips, leaves, expenses, and HMRC compliance with minimal manual input required.",
+    pricing: "Custom pricing based on headcount",
+    bestFor: "Scaleups, Modern SMEs, Tech businesses",
+    features: ["Automatic Payslips", "HRIS Integration", "HMRC RTI & Pensions", "Direct BACS Payments"],
+    tags: ["payroll", "hr", "automation", "scaleups"],
+    website: "https://payfit.com/gb/",
+    featured: true,
+    rating: 4.7
+  },
+  {
+    id: "nest-pensions",
+    name: "Nest Pensions",
+    category: "Compliance",
+    tagline: "Government-established workplace pension scheme for UK employer auto-enrolment.",
+    description: "Free for employers to set up and guaranteed to accept any UK employer seeking compliance with auto-enrolment laws.",
+    pricing: "Free for employers; 0.3% annual member fee",
+    bestFor: "Small employers, New LTDs hiring first staff",
+    features: ["Guaranteed Acceptance", "HMRC/TPR Compliant", "Payroll Integration", "Ethical Fund Options"],
+    tags: ["compliance", "pensions", "free-tier", "limited-company"],
+    website: "https://www.nestpensions.org.uk/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "capdesk",
+    name: "Capdesk (by Carta)",
+    category: "Compliance",
+    tagline: "Equity management and digital cap table software for UK startups.",
+    description: "Issue employee share options (EMI schemes), track investor ownership, and automate legal equity filings for British startups.",
+    pricing: "Quote-based plans",
+    bestFor: "Funded startups, Scaleups, High-growth LTDs",
+    features: ["EMI Option Schemes", "Cap Table Modelling", "Investor Portals", "Companies House Sync"],
+    tags: ["compliance", "equity", "startups", "scaleups"],
+    website: "https://capdesk.com/",
+    featured: false,
+    rating: 4.7
+  },
+  {
+    id: "taxfiler",
+    name: "Taxfiler (by IRIS)",
+    category: "Compliance",
+    tagline: "Cloud-based tax return and financial statement preparation software.",
+    description: "File Corporation Tax (CT600), Self Assessment (SA100), Partnership returns, and iXBRL accounts directly to HMRC and Companies House.",
+    pricing: "From £15/mo",
+    bestFor: "Accountants, Bookkeepers, Property investors",
+    features: ["CT600 Filing", "Companies House Accounts", "iXBRL Tagging", "Self Assessment"],
+    tags: ["compliance", "tax", "accounting", "sole-trader", "limited-company"],
+    website: "https://taxfiler.co.uk/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "chargebee",
+    name: "Chargebee",
+    category: "Payments",
+    tagline: "Subscription billing and revenue management platform for SaaS companies.",
+    description: "Automate recurring billing, UK/EU VAT compliance on digital goods, churn recovery, and multi-currency renewals.",
+    pricing: "Free launch tier; Paid from $599/mo",
+    bestFor: "SaaS founders, Digital product creators",
+    features: ["Automated Invoicing", "VAT MOSS Compliance", "Dunning Engine", "CRM Sync"],
+    tags: ["payments", "subscriptions", "saas", "vat"],
+    website: "https://www.chargebee.com/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "mollie",
+    name: "Mollie",
+    category: "Payments",
+    tagline: "Effortless European and UK payment processing for e-commerce platforms.",
+    description: "Simple plugin-based checkout for WooCommerce, Shopify, and custom apps supporting Apple Pay, Klarna, and cards.",
+    pricing: "Pay per transaction: 1.2% + 20p",
+    bestFor: "E-commerce merchants, Web shops",
+    features: ["Easy CMS Plugins", "No Monthly Fees", "Transparent Pricing", "Fast Checkout"],
+    tags: ["payments", "ecommerce", "low-cost"],
+    website: "https://www.mollie.com/gb",
+    featured: false,
+    rating: 4.7
+  },
+  {
+    id: "mettle",
+    name: "Mettle by NatWest",
+    category: "Banking",
+    tagline: "Free digital business account with built-in invoice creation and free FreeAgent access.",
+    description: "Includes free FreeAgent accounting subscription, automatic tax holdback calculation, and zero monthly fees.",
+    pricing: "£0 Free",
+    bestFor: "Sole traders, Early-stage Limited companies",
+    features: ["Includes FreeAgent ($300+ value)", "Tax Pots", "Quick Invoicing", "UK Support"],
+    tags: ["banking", "accounting", "sole-trader", "limited-company", "free-tier", "low-cost"],
+    website: "https://www.mettle.co.uk/",
+    featured: true,
+    rating: 4.8
+  },
+  {
+    id: "kashflow",
+    name: "KashFlow",
+    category: "Accounting",
+    tagline: "Straightforward bookkeeping and payroll tool built for owner-managed businesses.",
+    description: "Create quotes and invoices on the go, link to payment processors, and file VAT returns smoothly to HMRC.",
+    pricing: "From £10.50/mo",
+    bestFor: "Owner-managed trades, Small shops",
+    features: ["Quick Quotations", "VAT Returns", "Payment Processor Integrations"],
+    tags: ["accounting", "vat", "sole-trader", "low-cost"],
+    website: "https://www.kashflow.com/",
+    featured: false,
+    rating: 4.2
+  },
+  {
+    id: "float",
+    name: "Float Cash Flow",
+    category: "Accounting",
+    tagline: "Visual cash flow forecasting software that syncs live with Xero & QuickBooks.",
+    description: "Eliminate manual spreadsheet forecasts by visualizing upcoming cash inflows, bills, and payroll milestones dynamically.",
+    pricing: "From £39/mo",
+    bestFor: "Agencies, Growing companies, CFOs",
+    features: ["Live Bank Sync", "Scenario Planning", "Runway Forecasts", "Budgets vs Actuals"],
+    tags: ["accounting", "forecasting", "teams"],
+    website: "https://floatapp.com/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "futuroli",
+    name: "Futuroli",
+    category: "Accounting",
+    tagline: "Automated business planning, financial forecasting, and valuation reports.",
+    description: "Generate 3-way financial forecasts, investor-ready pitch deck charts, and balance sheet models connected to your accounts.",
+    pricing: "From £40/mo",
+    bestFor: "Startups raising capital, Fractional CFOs",
+    features: ["3-way Forecasting", "Scenario Modeling", "Valuation Analysis"],
+    tags: ["accounting", "forecasting", "startups"],
+    website: "https://www.futuroli.com/",
+    featured: false,
+    rating: 4.4
+  },
+  {
+    id: "syft-analytics",
+    name: "Syft Analytics",
+    category: "Accounting",
+    tagline: "Management reporting, visualization, and consolidated multi-entity analytics.",
+    description: "Transform complex raw accounting balances into executive dashboards, client reports, and performance scorecards.",
+    pricing: "From £15/mo",
+    bestFor: "Accountancy practices, Multi-entity owners",
+    features: ["Consolidations", "Executive Reports", "Benchmarking", "White-labeling"],
+    tags: ["accounting", "analytics", "enterprise"],
+    website: "https://www.syftanalytics.com/",
+    featured: false,
+    rating: 4.9
+  },
+  {
+    id: "crunch",
+    name: "Crunch",
+    category: "Accounting",
+    tagline: "Hybrid online accounting software paired with dedicated certified accountants.",
+    description: "All-in-one package providing both intuitive cloud accounting software and on-demand professional accountant support.",
+    pricing: "From £24.50/mo (Free entry tier)",
+    bestFor: "Contractors, Sole traders, Micro-businesses needing human help",
+    features: ["Dedicated Accountant Options", "Year-End Accounts", "Self Assessment", "Free Invoicing"],
+    tags: ["accounting", "sole-trader", "freelance", "limited-company", "tax"],
+    website: "https://www.crunch.co.uk/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "moss",
+    name: "Moss",
+    category: "Expenses",
+    tagline: "True credit card solutions and holistic spend management for fast-growth firms.",
+    description: "Issue physical/virtual cards with high credit limits, automate invoice matching, and manage corporate spend policies seamlessly.",
+    pricing: "Custom pricing",
+    bestFor: "Scaleups, Mid-market enterprises",
+    features: ["High Credit Lines", "Invoice Approvals", "ERP Sync", "Real-time Audits"],
+    tags: ["expenses", "cards", "enterprise", "teams"],
+    website: "https://getmoss.com/en-gb/",
+    featured: false,
+    rating: 4.7
+  },
+  {
+    id: "spendesk",
+    name: "Spendesk",
+    category: "Expenses",
+    tagline: "7-in-1 spend management platform covering corporate cards, invoices, and budgets.",
+    description: "Total visibility on company spending: employee cards, invoice processing, expense reimbursements, and automated accounting sync.",
+    pricing: "Custom tier",
+    bestFor: "Mid-sized companies, Finance directors",
+    features: ["Pre-approvals", "Purchase Orders", "Virtual Mastercards", "Auto VAT Detection"],
+    tags: ["expenses", "cards", "teams", "enterprise"],
+    website: "https://www.spendesk.com/en-gb/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "autoentry",
+    name: "AutoEntry",
+    category: "Expenses",
+    tagline: "Intelligent document scanning for receipts, bills, and paper bank statements.",
+    description: "Convert paper receipts, purchase orders, and scanned bank statements directly into organized data ready for ledger import.",
+    pricing: "Pay-as-you-go credit system",
+    bestFor: "Bookkeepers, In-house accountants",
+    features: ["Bank Statement OCR", "Line Item Extraction", "Cross-accounting Sync"],
+    tags: ["expenses", "receipts", "automation", "low-cost"],
+    website: "https://www.autoentry.com/",
+    featured: false,
+    rating: 4.5
+  },
+  {
+    id: "chaser",
+    name: "Chaser",
+    category: "Payments",
+    tagline: "Automated invoice chasing and accounts receivable debtor management software.",
+    description: "Politely prompt clients to pay late invoices via automated customized email/SMS reminders, reducing DSO significantly.",
+    pricing: "From £40/mo",
+    bestFor: "B2B businesses, Agencies with late-paying clients",
+    features: ["Automated Reminders", "Payment Portal", "Credit Checking", "Debtor Tracking"],
+    tags: ["payments", "invoicing", "automation", "b2b"],
+    website: "https://www.chaserhq.com/",
+    featured: false,
+    rating: 4.9
+  },
+  {
+    id: "iwoca",
+    name: "iwoca",
+    category: "Banking",
+    tagline: "Fast, flexible working capital and credit lines for UK small businesses.",
+    description: "Apply for revolving business credit facilities up to £500,000 with rapid online decisions based on live bank data.",
+    pricing: "Interest rates vary based on term & usage",
+    bestFor: "Seasonal businesses, Working capital, Inventory purchases",
+    features: ["Revolving Credit", "Instant Decisions", "No Early Repayment Fees", "Open Banking Integration"],
+    tags: ["banking", "loans", "startups", "limited-company"],
+    website: "https://www.iwoca.co.uk/",
+    featured: false,
+    rating: 4.7
+  },
+  {
+    id: "funding-circle",
+    name: "Funding Circle",
+    category: "Banking",
+    tagline: "UK government-accredited small business loans and commercial financing.",
+    description: "Unsecured business loans from £10,000 to £500,000 with flexible fixed repayment terms and competitive rates.",
+    pricing: "Competitive interest + arrangement fee",
+    bestFor: "Established UK businesses looking to expand",
+    features: ["Unsecured Loans", "Fast Decisions", "Fixed Repayments"],
+    tags: ["banking", "loans", "enterprise"],
+    website: "https://www.fundingcircle.com/uk/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "ancon",
+    name: "ANNA Money",
+    category: "Banking",
+    tagline: "Business account + tax assistant designed for freelancers and micro-businesses.",
+    description: "Combines a debit card with an AI assistant that calculates your tax liability in real time, creates invoices, and chases payments.",
+    pricing: "Free pay-as-you-go or £14.90/mo subscription",
+    bestFor: "Creative freelancers, Solo entrepreneurs",
+    features: ["Real-time Tax Calculations", "Automated Invoicing", "Chat-based Support"],
+    tags: ["banking", "sole-trader", "freelance", "tax", "low-cost"],
+    website: "https://anna.money/",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "square",
+    name: "Square UK",
+    category: "Payments",
+    tagline: "Omnichannel checkout, point-of-sale software, and contactless hardware.",
+    description: "Accept in-person, online, and over-the-phone payments with flat transparent rates, free software, and fast next-day payouts.",
+    pricing: "1.75% in-person, 1.4% + 25p online",
+    bestFor: "Omnichannel retail, Popups, Beauty salons",
+    features: ["Free POS App", "Hardware Ecosystem", "Online Store Builder", "Next-day Transfers"],
+    tags: ["payments", "pos", "retail", "ecommerce", "low-cost"],
+    website: "https://squareup.com/gb/en",
+    featured: false,
+    rating: 4.6
+  },
+  {
+    id: "capital-on-tap",
+    name: "Capital on Tap",
+    category: "Banking",
+    tagline: "Business credit cards with up to 1% uncapped cashback and credit lines up to £250k.",
+    description: "Credit card designed exclusively for UK limited companies with no foreign transaction fees and seamless accounting sync.",
+    pricing: "Free standard card or £99/yr for Pro Rewards",
+    bestFor: "UK Limited Companies, High ad-spend companies",
+    features: ["Uncapped Cashback", "0% Foreign FX Fees", "Integrations with Xero/FreeAgent", "Up to £250k limits"],
+    tags: ["banking", "cards", "limited-company", "fx"],
+    website: "https://www.capitalontap.com/en/",
+    featured: false,
+    rating: 4.8
+  }
+];
 
-    /*
-     * FinStack UK
-     * Tool directory data
-     *
-     * This file intentionally contains structured data so that
-     * the directory can be expanded easily by a future owner.
-     */
-
-    window.FinStackTools = [
-        {
-            id: "xero",
-            name: "Xero",
-            category: "Accounting",
-            slug: "xero",
-            description:
-                "Cloud accounting software with invoicing, bank reconciliation, VAT and Making Tax Digital support.",
-            bestFor:
-                "Growing limited companies and established SMEs",
-            price:
-                "Paid plans available",
-            tags: [
-                "Accounting",
-                "VAT",
-                "MTD",
-                "Invoicing",
-                "Bank reconciliation"
-            ],
-            website:
-                "https://www.xero.com/uk/"
-        },
-
-        {
-            id: "freeagent",
-            name: "FreeAgent",
-            category: "Accounting",
-            slug: "freeagent",
-            description:
-                "UK-focused accounting software designed for freelancers, contractors and small businesses.",
-            bestFor:
-                "Sole traders, freelancers and contractors",
-            price:
-                "Paid plans; free options may be available through qualifying banking arrangements",
-            tags: [
-                "Accounting",
-                "Self Assessment",
-                "MTD",
-                "Invoicing"
-            ],
-            website:
-                "https://www.freeagent.com/"
-        },
-
-        {
-            id: "pandle",
-            name: "Pandle",
-            category: "Accounting",
-            slug: "pandle",
-            description:
-                "Simple online bookkeeping software designed for small businesses and sole traders.",
-            bestFor:
-                "Micro businesses and startups",
-            price:
-                "Free and paid options",
-            tags: [
-                "Bookkeeping",
-                "Accounting",
-                "Invoicing",
-                "Small business"
-            ],
-            website:
-                "https://www.pandle.com/"
-        },
-
-        {
-            id: "tide",
-            name: "Tide",
-            category: "Payments",
-            slug: "tide",
-            description:
-                "UK business banking platform offering business accounts, invoicing and expense management features.",
-            bestFor:
-                "New and small UK businesses",
-            price:
-                "Free and paid account options",
-            tags: [
-                "Business banking",
-                "Payments",
-                "Invoicing",
-                "Expenses"
-            ],
-            website:
-                "https://www.tide.co/"
-        },
-
-        {
-            id: "anna-money",
-            name: "ANNA Money",
-            category: "Payments",
-            slug: "anna-money",
-            description:
-                "Digital business account combining banking, invoicing, receipt management and business administration tools.",
-            bestFor:
-                "Sole traders and small businesses wanting automation",
-            price:
-                "Paid plans; trial options may be available",
-            tags: [
-                "Business banking",
-                "Invoicing",
-                "Receipts",
-                "Automation"
-            ],
-            website:
-                "https://anna.money/"
-        },
-
-        {
-            id: "wise-business",
-            name: "Wise Business",
-            category: "Payments",
-            slug: "wise-business",
-            description:
-                "Multi-currency business account and international payment solution for companies trading across borders.",
-            bestFor:
-                "Businesses receiving or sending international payments",
-            price:
-                "Pay-per-use pricing",
-            tags: [
-                "Multi-currency",
-                "International payments",
-                "FX",
-                "Transfers"
-            ],
-            website:
-                "https://wise.com/gb/business/"
-        },
-
-        {
-            id: "iwoca",
-            name: "iwoca",
-            category: "Lending",
-            slug: "iwoca",
-            description:
-                "Flexible business finance and credit solutions designed for UK small businesses.",
-            bestFor:
-                "Businesses needing flexible short-term finance",
-            price:
-                "Custom pricing",
-            tags: [
-                "Business finance",
-                "Credit",
-                "Working capital",
-                "SME lending"
-            ],
-            website:
-                "https://www.iwoca.co.uk/"
-        },
-
-        {
-            id: "funding-circle",
-            name: "Funding Circle",
-            category: "Lending",
-            slug: "funding-circle",
-            description:
-                "Business finance platform focused on providing funding solutions to established SMEs.",
-            bestFor:
-                "Established businesses seeking larger funding",
-            price:
-                "Custom pricing",
-            tags: [
-                "Business loans",
-                "SME finance",
-                "Working capital"
-            ],
-            website:
-                "https://www.fundingcircle.com/uk/"
-        },
-
-        {
-            id: "sage",
-            name: "Sage Accounting",
-            category: "Compliance",
-            slug: "sage-accounting",
-            description:
-                "Established accounting platform supporting VAT, bookkeeping and Making Tax Digital workflows.",
-            bestFor:
-                "Established SMEs needing broader accounting functionality",
-            price:
-                "Paid plans available",
-            tags: [
-                "Accounting",
-                "VAT",
-                "MTD",
-                "Compliance"
-            ],
-            website:
-                "https://www.sage.com/en-gb/"
-        },
-
-        {
-            id: "coconut",
-            name: "Coconut",
-            category: "Compliance",
-            slug: "coconut",
-            description:
-                "Accounting and tax management software aimed at freelancers and sole traders.",
-            bestFor:
-                "Freelancers managing their own tax",
-            price:
-                "Paid plans; trial options may be available",
-            tags: [
-                "Tax",
-                "Self Assessment",
-                "Accounting",
-                "Freelancers"
-            ],
-            website:
-                "https://www.getcoconut.com/"
-        }
-    ];
-
-
-    /*
-     * Utility functions
-     */
-
-    window.FinStackTools.getById = function (id) {
-        return this.find(function (tool) {
-            return tool.id === id;
-        });
-    };
-
-    window.FinStackTools.getByCategory = function (category) {
-        return this.filter(function (tool) {
-            return (
-                tool.category.toLowerCase() ===
-                category.toLowerCase()
-            );
-        });
-    };
-
-    window.FinStackTools.search = function (query) {
-        query = (query || "").toLowerCase().trim();
-
-        if (!query) {
-            return this;
-        }
-
-        return this.filter(function (tool) {
-            var searchableText = [
-                tool.name,
-                tool.category,
-                tool.description,
-                tool.bestFor,
-                tool.price,
-                tool.tags.join(" ")
-            ]
-                .join(" ")
-                .toLowerCase();
-
-            return searchableText.indexOf(query) !== -1;
-        });
-    };
-
-
-    /*
-     * Provider profile helper
-     *
-     * If tool.html is opened with:
-     *
-     * tool.html?id=xero
-     *
-     * this function can retrieve the corresponding provider.
-     */
-
-    window.FinStackTools.getFromURL = function () {
-        var params = new URLSearchParams(window.location.search);
-        var id = params.get("id");
-
-        if (!id) {
-            return null;
-        }
-
-        return this.getById(id);
-    };
-
-
-    /*
-     * Simple outbound click tracking hook.
-     *
-     * This does NOT send data anywhere by itself.
-     * A future owner can connect analytics here.
-     */
-
-    window.FinStackTools.trackOutboundClick = function (tool) {
-        if (!tool) {
-            return;
-        }
-
-        /*
-         * Future analytics integration can be added here.
-         *
-         * Example:
-         * gtag("event", "provider_click", {
-         *     provider: tool.name,
-         *     category: tool.category
-         * });
-         */
-    };
-
-
-    /*
-     * Optional automatic provider-page population.
-     *
-     * Works when tool.html contains elements with these IDs:
-     *
-     * tool-name
-     * tool-category
-     * tool-description
-     * tool-best-for
-     * tool-price
-     * tool-website
-     * tool-tags
-     */
-
-    document.addEventListener("DOMContentLoaded", function () {
-        var tool = window.FinStackTools.getFromURL();
-
-        if (!tool) {
-            return;
-        }
-
-        var name = document.getElementById("tool-name");
-        var category = document.getElementById("tool-category");
-        var description =
-            document.getElementById("tool-description");
-        var bestFor =
-            document.getElementById("tool-best-for");
-        var price =
-            document.getElementById("tool-price");
-        var website =
-            document.getElementById("tool-website");
-        var tags =
-            document.getElementById("tool-tags");
-
-        if (name) {
-            name.textContent = tool.name;
-        }
-
-        if (category) {
-            category.textContent = tool.category;
-        }
-
-        if (description) {
-            description.textContent = tool.description;
-        }
-
-        if (bestFor) {
-            bestFor.textContent = tool.bestFor;
-        }
-
-        if (price) {
-            price.textContent = tool.price;
-        }
-
-        if (website) {
-            website.href = tool.website;
-            website.target = "_blank";
-            website.rel = "noopener noreferrer";
-
-            website.addEventListener("click", function () {
-                window.FinStackTools.trackOutboundClick(tool);
-            });
-        }
-
-        if (tags) {
-            tags.innerHTML = "";
-
-            tool.tags.forEach(function (tag) {
-                var span = document.createElement("span");
-
-                span.className = "badge-pill";
-                span.textContent = tag;
-
-                tags.appendChild(span);
-            });
-        }
-    });
-
-})();
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { TOOLS_DATA };
+}
