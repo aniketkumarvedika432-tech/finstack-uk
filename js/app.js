@@ -40,7 +40,6 @@ function updateLiveCounters() {
   });
 }
 
-// 10/10 Card Generator with High-Contrast Brand Badges
 function buildToolCard(tool, customBadge = "") {
   const card = document.createElement("div");
   card.className = "card";
@@ -73,7 +72,6 @@ function buildToolCard(tool, customBadge = "") {
   return card;
 }
 
-// Built-in Affiliate & Outbound Click Tracking Engine
 function bindOutboundClickAnalytics() {
   document.addEventListener("click", (e) => {
     const trackBtn = e.target.closest(".outbound-track");
@@ -155,7 +153,21 @@ function initDirectory() {
     });
 
     if (results.length === 0) {
-      if (empty) empty.style.display = "block";
+      if (empty) {
+        empty.style.display = "block";
+        empty.innerHTML = `
+          <p>No tools matched your criteria.</p>
+          <button class="btn btn-secondary" id="resetFiltersBtn" style="height: 38px;">Reset Filters</button>
+        `;
+        const resetBtn = document.getElementById("resetFiltersBtn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            if (searchInput) searchInput.value = "";
+            if (catSelect) catSelect.value = "all";
+            render();
+          });
+        }
+      }
       if (countEl) countEl.textContent = "Showing 0 tools";
     } else {
       if (empty) empty.style.display = "none";
@@ -170,7 +182,6 @@ function initDirectory() {
   render();
 }
 
-// 10/10 Finder with Dynamic Match % Badges
 function initFinder() {
   const form = document.getElementById("finderForm") || document.querySelector("form");
   const resultsWrapper = document.getElementById("results");
@@ -220,7 +231,6 @@ function initFinder() {
   });
 }
 
-// 10/10 Profile Page with Live Comparison Matrix
 function initProfile() {
   const target = document.getElementById("toolProfile");
   if (!target) return;
@@ -242,8 +252,6 @@ function initProfile() {
 
   document.title = `${tool.name} Review & Feature Matrix | FinStack UK`;
   const initials = getInitials(tool.name);
-
-  // Find 2 direct Category Competitors for the Matrix Table
   const competitors = TOOLS_DATA.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 2);
 
   target.innerHTML = `
@@ -277,7 +285,6 @@ function initProfile() {
       </div>
     </div>
 
-    <!-- 10/10 Injected Comparison Matrix -->
     <div style="margin-top:36px; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; box-shadow: var(--shadow-card);">
       <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:6px;">Category Comparison Matrix (${esc(tool.category)})</h3>
       <p style="color:#64748b; font-size:0.9rem; margin-bottom:16px;">Direct feature and pricing comparison for leading UK solutions in this space.</p>
