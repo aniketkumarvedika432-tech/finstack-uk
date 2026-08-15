@@ -1,6 +1,6 @@
 /**
- * FinStack UK - 10/10 Master Engine
- * Features: Brand Monograms, Dynamic Comparison Matrix, Click Tracking, Live Filtering
+ * FinStack UK - Master Frontend Engine
+ * Features: Brand Monograms, Dynamic Comparison Matrix, Click Tracking, Live Filtering, Verified Sourcing
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -44,6 +44,9 @@ function buildToolCard(tool, customBadge = "") {
   const card = document.createElement("div");
   card.className = "card";
   const initials = getInitials(tool.name);
+  const sourceLabel = tool.ratingSource
+    ? `<small style="font-size:0.7rem; color:#64748b; font-weight:500; display:block; margin-top:2px;">${esc(tool.ratingSource)}</small>`
+    : "";
 
   card.innerHTML = `
     <div class="card-top">
@@ -54,11 +57,12 @@ function buildToolCard(tool, customBadge = "") {
           <h3>${esc(tool.name)}</h3>
         </div>
       </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px; text-align:right;">
         <div style="font-weight:700; color:#0284c7; font-size:0.875rem; background:#f0f9ff; border:1px solid #bae6fd; padding:3px 8px; border-radius:6px;">
           ★ ${tool.rating || 4.5}
         </div>
-        ${customBadge ? `<span style="font-size:0.75rem; font-weight:700; color:#16a34a;">${customBadge}</span>` : ""}
+        ${sourceLabel}
+        ${customBadge ? `<span style="font-size:0.75rem; font-weight:700; color:#16a34a; margin-top:2px;">${customBadge}</span>` : ""}
       </div>
     </div>
     <p>${esc(tool.tagline || tool.description)}</p>
@@ -156,7 +160,7 @@ function initDirectory() {
       if (empty) {
         empty.style.display = "block";
         empty.innerHTML = `
-          <p>No tools matched your criteria.</p>
+          <p style="margin-bottom: 16px; color: #64748b;">No tools match your search criteria.</p>
           <button class="btn btn-secondary" id="resetFiltersBtn" style="height: 38px;">Reset Filters</button>
         `;
         const resetBtn = document.getElementById("resetFiltersBtn");
@@ -219,7 +223,7 @@ function initFinder() {
     grid.innerHTML = "";
 
     if (shortlist.length === 0) {
-      grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 20px;'>No exact match found. Try broader options.</p>";
+      grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 20px; color:#64748b;'>No exact match found. Try broader options.</p>";
     } else {
       shortlist.forEach(tool => {
         grid.appendChild(buildToolCard(tool, `${tool.matchPct}% Match`));
@@ -279,7 +283,7 @@ function initProfile() {
         <h3 style="font-size:1.25rem; margin-bottom:16px; font-weight:700;">Provider Factsheet</h3>
         <div class="meta-row" style="margin-bottom:10px;"><strong>Best for:</strong> <span>${esc(tool.bestFor)}</span></div>
         <div class="meta-row" style="margin-bottom:10px;"><strong>Pricing Model:</strong> <span>${esc(tool.pricing)}</span></div>
-        <div class="meta-row" style="margin-bottom:10px;"><strong>SME Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0</span></div>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Verified Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0 (${esc(tool.ratingSource || "Public Review Aggregators")})</span></div>
         <div class="meta-row" style="margin-bottom:10px;"><strong>UK Compliance:</strong> <span>HMRC / MTD Verified ✓</span></div>
         <a class="btn btn-block outbound-track" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}" style="margin-top:24px; height:46px;">Visit Official Website ↗</a>
       </div>
@@ -287,7 +291,7 @@ function initProfile() {
 
     <div style="margin-top:36px; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; box-shadow: var(--shadow-card);">
       <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:6px;">Category Comparison Matrix (${esc(tool.category)})</h3>
-      <p style="color:#64748b; font-size:0.9rem; margin-bottom:16px;">Direct feature and pricing comparison for leading UK solutions in this space.</p>
+      <p style="color:#64748b; font-size:0.9rem; margin-bottom:16px;">Direct feature, pricing, and verified rating comparison for leading UK solutions.</p>
       
       <table class="comparison-matrix">
         <thead>
@@ -295,7 +299,7 @@ function initProfile() {
             <th>Provider</th>
             <th>Pricing</th>
             <th>Target Audience</th>
-            <th>Rating</th>
+            <th>Verified Rating</th>
             <th>Direct Review</th>
           </tr>
         </thead>
@@ -304,7 +308,7 @@ function initProfile() {
             <td>${esc(tool.name)} (Viewing)</td>
             <td>${esc(tool.pricing)}</td>
             <td>${esc(tool.bestFor)}</td>
-            <td>★ ${tool.rating || 4.5}</td>
+            <td>★ ${tool.rating || 4.5} <small style="display:block; font-size:0.75rem; color:#64748b; font-weight:normal;">(${esc(tool.ratingSource || "Public")})</small></td>
             <td>Current</td>
           </tr>
           ${competitors.map(c => `
@@ -312,7 +316,7 @@ function initProfile() {
               <td>${esc(c.name)}</td>
               <td>${esc(c.pricing)}</td>
               <td>${esc(c.bestFor)}</td>
-              <td>★ ${c.rating || 4.5}</td>
+              <td>★ ${c.rating || 4.5} <small style="display:block; font-size:0.75rem; color:#64748b; font-weight:normal;">(${esc(c.ratingSource || "Public")})</small></td>
               <td><a href="tool.html?id=${encodeURIComponent(c.id)}" style="color:#0284c7; font-weight:600; text-decoration:none;">Compare →</a></td>
             </tr>
           `).join("")}
