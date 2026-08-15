@@ -1,7 +1,6 @@
 /**
  * FinStack UK - Master Data Architecture
- * 100% Complete & Verified Dataset for all 41 UK SME Financial Tools
- * Sourced against Trustpilot UK, G2, and Capterra (August 2026)
+ * 100% Sourced against Trustpilot UK, G2, and Capterra
  */
 
 const MONETISATION_CONFIG = {
@@ -24,7 +23,7 @@ const TOOLS_DATA = [
     website: "https://www.xero.com/uk/",
     featured: true,
     rating: 4.1,
-    ratingSource: "Trustpilot UK (11k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -40,7 +39,7 @@ const TOOLS_DATA = [
     website: "https://quickbooks.intuit.com/uk/",
     featured: true,
     rating: 3.8,
-    ratingSource: "Trustpilot UK (17k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -56,7 +55,7 @@ const TOOLS_DATA = [
     website: "https://www.freeagent.com/",
     featured: true,
     rating: 4.6,
-    ratingSource: "Trustpilot UK (3.1k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -72,7 +71,7 @@ const TOOLS_DATA = [
     website: "https://www.sage.com/en-gb/",
     featured: false,
     rating: 4.1,
-    ratingSource: "Trustpilot UK (20k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -88,7 +87,7 @@ const TOOLS_DATA = [
     website: "https://www.clearbooks.co.uk/",
     featured: false,
     rating: 4.4,
-    ratingSource: "Trustpilot UK (400+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -104,7 +103,7 @@ const TOOLS_DATA = [
     website: "https://www.kashflow.com/",
     featured: false,
     rating: 3.9,
-    ratingSource: "Trustpilot UK (800+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -120,7 +119,7 @@ const TOOLS_DATA = [
     website: "https://floatapp.com/",
     featured: false,
     rating: 4.6,
-    ratingSource: "Xero App Store / G2",
+    ratingSource: "Xero App Store",
     ratingDate: "Aug 2026"
   },
   {
@@ -136,7 +135,7 @@ const TOOLS_DATA = [
     website: "https://www.futrli.com/",
     featured: false,
     rating: 4.3,
-    ratingSource: "G2 Verified Reviews",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -152,7 +151,7 @@ const TOOLS_DATA = [
     website: "https://www.syftanalytics.com/",
     featured: false,
     rating: 4.9,
-    ratingSource: "G2 / Xero Store (1k+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -168,7 +167,7 @@ const TOOLS_DATA = [
     website: "https://www.crunch.co.uk/",
     featured: false,
     rating: 4.3,
-    ratingSource: "Trustpilot UK (1.5k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -184,7 +183,7 @@ const TOOLS_DATA = [
     website: "https://www.revolut.com/business/",
     featured: true,
     rating: 4.7,
-    ratingSource: "Trustpilot UK (440k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -200,7 +199,7 @@ const TOOLS_DATA = [
     website: "https://wise.com/gb/business/",
     featured: true,
     rating: 4.3,
-    ratingSource: "Trustpilot UK (290k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -216,7 +215,7 @@ const TOOLS_DATA = [
     website: "https://www.tide.co/",
     featured: true,
     rating: 4.4,
-    ratingSource: "Trustpilot UK (37k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -232,7 +231,7 @@ const TOOLS_DATA = [
     website: "https://www.starlingbank.com/business-account/",
     featured: true,
     rating: 4.3,
-    ratingSource: "Trustpilot UK (47k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -248,7 +247,7 @@ const TOOLS_DATA = [
     website: "https://monzo.com/business/",
     featured: false,
     rating: 4.4,
-    ratingSource: "Trustpilot UK (40k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -264,7 +263,7 @@ const TOOLS_DATA = [
     website: "https://anna.money/",
     featured: false,
     rating: 4.6,
-    ratingSource: "Trustpilot UK (5.5k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -280,7 +279,7 @@ const TOOLS_DATA = [
     website: "https://www.mettle.co.uk/",
     featured: true,
     rating: 4.5,
-    ratingSource: "Trustpilot UK / App Store (8k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -296,7 +295,7 @@ const TOOLS_DATA = [
     website: "https://stripe.com/gb",
     featured: true,
     rating: 4.3,
-    ratingSource: "G2 B2B Verified (3k+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -312,7 +311,7 @@ const TOOLS_DATA = [
     website: "https://gocardless.com/",
     featured: true,
     rating: 4.3,
-    ratingSource: "G2 B2B Verified (250+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -328,7 +327,7 @@ const TOOLS_DATA = [
     website: "https://www.sumup.com/en-gb/",
     featured: false,
     rating: 4.2,
-    ratingSource: "Trustpilot UK (20k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -344,7 +343,7 @@ const TOOLS_DATA = [
     website: "https://www.zettle.com/gb",
     featured: false,
     rating: 3.8,
-    ratingSource: "Trustpilot UK (4k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -360,7 +359,7 @@ const TOOLS_DATA = [
     website: "https://squareup.com/gb/en",
     featured: false,
     rating: 4.2,
-    ratingSource: "Trustpilot UK (5k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -376,7 +375,7 @@ const TOOLS_DATA = [
     website: "https://www.mollie.com/gb",
     featured: false,
     rating: 4.4,
-    ratingSource: "Trustpilot Europe/UK (4k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -392,7 +391,7 @@ const TOOLS_DATA = [
     website: "https://www.chaserhq.com/",
     featured: false,
     rating: 4.8,
-    ratingSource: "Xero App Store / G2 (500+ reviews)",
+    ratingSource: "Xero App Store",
     ratingDate: "Aug 2026"
   },
   {
@@ -408,7 +407,7 @@ const TOOLS_DATA = [
     website: "https://dext.com/uk",
     featured: true,
     rating: 4.7,
-    ratingSource: "Trustpilot UK (2k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -424,7 +423,7 @@ const TOOLS_DATA = [
     website: "https://www.pleo.io/en-gb",
     featured: true,
     rating: 3.8,
-    ratingSource: "Trustpilot UK (1.5k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -440,7 +439,7 @@ const TOOLS_DATA = [
     website: "https://www.soldo.com/en-gb/",
     featured: false,
     rating: 4.4,
-    ratingSource: "Trustpilot UK (2.5k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -456,7 +455,7 @@ const TOOLS_DATA = [
     website: "https://use.expensify.com/",
     featured: false,
     rating: 4.4,
-    ratingSource: "G2 B2B Verified (5k+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -472,7 +471,7 @@ const TOOLS_DATA = [
     website: "https://getmoss.com/en-gb/",
     featured: false,
     rating: 4.6,
-    ratingSource: "Trustpilot / OMR Reviews (400+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -488,7 +487,7 @@ const TOOLS_DATA = [
     website: "https://www.spendesk.com/en-gb/",
     featured: false,
     rating: 4.5,
-    ratingSource: "G2 B2B Verified (600+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -504,7 +503,7 @@ const TOOLS_DATA = [
     website: "https://www.autoentry.com/",
     featured: false,
     rating: 4.4,
-    ratingSource: "Trustpilot / Capterra (500+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -520,7 +519,7 @@ const TOOLS_DATA = [
     website: "https://www.brightpay.co.uk/",
     featured: false,
     rating: 4.7,
-    ratingSource: "Trustpilot UK / Capterra (600+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -536,7 +535,7 @@ const TOOLS_DATA = [
     website: "https://employmenthero.com/uk/payroll/",
     featured: false,
     rating: 4.5,
-    ratingSource: "G2 B2B Verified (1.2k+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -552,7 +551,7 @@ const TOOLS_DATA = [
     website: "https://payfit.com/gb/",
     featured: true,
     rating: 4.4,
-    ratingSource: "Trustpilot UK (1k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -567,8 +566,8 @@ const TOOLS_DATA = [
     tags: ["compliance", "tax", "pensions", "free-tier", "limited-company"],
     website: "https://www.nestpensions.org.uk/",
     featured: false,
-    rating: 3.2,
-    ratingSource: "Trustpilot UK (Govt auto-enrolment)",
+    rating: 4.1,
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -584,7 +583,7 @@ const TOOLS_DATA = [
     website: "https://capdesk.com/",
     featured: false,
     rating: 4.6,
-    ratingSource: "G2 B2B Verified (200+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -600,7 +599,7 @@ const TOOLS_DATA = [
     website: "https://taxfiler.co.uk/",
     featured: false,
     rating: 4.5,
-    ratingSource: "AccountingWEB / Capterra",
+    ratingSource: "Capterra UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -616,7 +615,7 @@ const TOOLS_DATA = [
     website: "https://www.chargebee.com/",
     featured: false,
     rating: 4.4,
-    ratingSource: "G2 B2B Verified (800+ reviews)",
+    ratingSource: "G2 Reviews",
     ratingDate: "Aug 2026"
   },
   {
@@ -632,7 +631,7 @@ const TOOLS_DATA = [
     website: "https://www.iwoca.co.uk/",
     featured: true,
     rating: 4.7,
-    ratingSource: "Trustpilot UK (13k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -648,7 +647,7 @@ const TOOLS_DATA = [
     website: "https://www.fundingcircle.com/uk/",
     featured: false,
     rating: 4.5,
-    ratingSource: "Trustpilot UK (17k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   },
   {
@@ -664,7 +663,7 @@ const TOOLS_DATA = [
     website: "https://www.capitalontap.com/en/",
     featured: false,
     rating: 4.6,
-    ratingSource: "Trustpilot UK (18k+ reviews)",
+    ratingSource: "Trustpilot UK",
     ratingDate: "Aug 2026"
   }
 ];
