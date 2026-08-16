@@ -22,19 +22,44 @@
   <meta name="twitter:description" content="Search and compare 40+ verified UK business accounts, accounting, payments, and payroll tools organized for British small businesses.">
   <meta name="twitter:image" content="https://finstack-uk.vercel.app/og-image.png">
 
-  <!-- JSON-LD Schema (Google Rich Results & Crawlers) -->
+  <!-- JSON-LD Schema (WebSite & FAQ Combined) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "FinStack UK",
-    "url": "https://finstack-uk.vercel.app/",
-    "description": "Verified directory and decision engine for UK SME fintech, accounting, and business banking tools.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://finstack-uk.vercel.app/tools.html?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "FinStack UK",
+        "url": "https://finstack-uk.vercel.app/",
+        "description": "Verified directory and decision engine for UK SME fintech, accounting, and business banking tools.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://finstack-uk.vercel.app/tools.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is FinStack UK?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FinStack UK is an independent fintech directory and interactive recommendation engine helping UK SMEs, sole traders, and limited companies compare verified financial tools."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are the fintech ratings on FinStack verified?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, all ratings are sourced directly from verified public review platforms including Trustpilot UK, G2, and Capterra with audit timestamps."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 
