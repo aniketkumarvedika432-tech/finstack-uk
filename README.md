@@ -24,7 +24,7 @@ FinStack UK is a production-ready, zero-OPEX fintech discovery directory and int
 ### 1. Local Development
 No build tools, compilation steps, or `npm install` requirements:
 ```bash
-git clone [https://github.com/YOUR_USERNAME/finstack-uk.git](https://github.com/YOUR_USERNAME/finstack-uk.git)
+git clone https://github.com/aniketkumarvedika432-tech/finstack-uk.git
 cd finstack-uk
 
 ```
@@ -57,9 +57,9 @@ const AFFILIATE_CONFIG = {
   
   // Custom direct affiliate / CPA network tracking links
   customLinks: {
-    "tide": "[https://www.tide.co/?ref=YOUR_AFFILIATE_ID](https://www.tide.co/?ref=YOUR_AFFILIATE_ID)",
-    "revolut-business": "[https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID](https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID)",
-    "wise-business": "[https://wise.com/business/?ref=YOUR_AFFILIATE_ID](https://wise.com/business/?ref=YOUR_AFFILIATE_ID)"
+    "tide": "https://www.tide.co/?ref=YOUR_AFFILIATE_ID",
+    "revolut-business": "https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID",
+    "wise-business": "https://wise.com/business/?ref=YOUR_AFFILIATE_ID"
   }
 };
 
