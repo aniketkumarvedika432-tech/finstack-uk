@@ -1,75 +1,116 @@
 # FinStack UK — Production UK SME FinTech Directory & Recommendation Engine
 
-FinStack.uk is a zero-OPEX, production-grade fintech discovery platform and decision engine built for UK sole traders, startups, and Limited Companies.
+[![Live Demo](https://img.shields.io/badge/Live_Site-finstack--uk.vercel.app-0284c7?style=flat-square&logo=vercel)](https://finstack-uk.vercel.app/)
+[![Maintenance OPEX](https://img.shields.io/badge/OPEX-%240%2Fmonth-10b981?style=flat-square)](https://finstack-uk.vercel.app/)
+[![Audited Tools](https://img.shields.io/badge/Audited_Tools-41_Verified-6366f1?style=flat-square)](https://finstack-uk.vercel.app/tools.html)
+[![Stack](https://img.shields.io/badge/Stack-HTML5_%7C_CSS3_%7C_ES6%2B_JS-f59e0b?style=flat-square)](https://finstack-uk.vercel.app/)
+
+FinStack UK is a production-ready, zero-OPEX fintech discovery directory and interactive recommendation engine built specifically for UK sole traders, startups, and Limited Companies navigating British regulatory and banking rails (HMRC Making Tax Digital, FSCS protection, CIS deductions, payments, and RTI payroll).
 
 ---
 
-## ⚡ Key Highlights
-- **Zero Operating Costs:** Runs perpetually on Vercel Edge with zero database overhead.
-- **Audited Dataset:** 40+ verified UK SME tools across 8 key financial categories.
-- **Interactive Finder:** Dynamic 3-step decision scoring algorithm (`finder.html`).
-- **Turnkey Monetisation:** Built-in affiliate link router and featured listing support.
+## ⚡ Key Acquisition Highlights
+
+* **$0/month Perpetual OPEX:** Operates fully client-side on Vercel Edge with zero server maintenance, node build overhead, or database subscription costs.
+* **41 Curated UK B2B Tools:** Categorized across 8 financial verticals (Business Banking, Accounting/MTD, Invoicing, Corporate Cards, Payroll, Payment Gateways, Expense Management, and FX/Cross-Border) with verified Trustpilot UK and G2 audit points.
+* **Dynamic Decision Engine:** 3-step recommendation scoring algorithm (`finder.html`) that calculates weighted match percentages in real time.
+* **Turnkey Dual Monetisation:** Features a centralized 1-click affiliate router alongside a built-in `featured: true` sponsorship badging system.
+* **SEO & Indexing Infrastructure:** Validated dual `@graph` schema markup (`WebSite` + `FAQPage` JSON-LD), dedicated `sitemap.xml`, `robots.txt`, and high-DPI Open Graph previews.
 
 ---
 
-## 🛠️ Quickstart Guide
+## 🛠️ Quickstart & Deployment Guide
 
 ### 1. Local Development
-No build tools, npm packages, or bundlers needed. Simply open `index.html` directly in any web browser or use a live server extension in VS Code.
+No build tools, compilation steps, or `npm install` requirements:
+```bash
+git clone [https://github.com/YOUR_USERNAME/finstack-uk.git](https://github.com/YOUR_USERNAME/finstack-uk.git)
+cd finstack-uk
 
-### 2. Connecting a Custom Domain on Vercel
-1. Go to your **Vercel Dashboard** → Select **FinStack UK**.
-2. Navigate to **Settings** → **Domains**.
-3. Enter your custom domain (e.g., `finstack.co.uk`) and add the provided CNAME/A records in your DNS manager.
+```
+
+Open `index.html` directly in any standard browser or run with VS Code Live Server.
+
+### 2. Custom Domain Configuration (Vercel)
+
+1. Open your **Vercel Dashboard** → Select **finstack-uk**.
+2. Navigate to **Settings** → **Domains** and input your domain (e.g., `finstack.co.uk` or `finstack.uk`).
+3. Add the corresponding DNS records in your domain registrar (GoDaddy, Namecheap, Cloudflare):
+* **Apex Domain (`example.co.uk`):** `A` Record `@` pointing to `76.76.21.21`
+* **Subdomain (`www.example.co.uk`):** `CNAME` Record `www` pointing to `cname.vercel-dns.com`
+
+
+4. SSL certificates are provisioned automatically by Vercel upon DNS verification.
 
 ---
 
-## 💰 Monetisation Configuration
+## 💰 Monetisation & Listing Configuration
 
-### How to Add / Swap Affiliate Links
-Open `js/tools.js` and edit the `AFFILIATE_CONFIG` object at the top:
+### 1. Global Affiliate & Referral Router
+
+Outbound links route through the centralized `AFFILIATE_CONFIG` object located at the top of `js/tools.js`:
 
 ```javascript
 const AFFILIATE_CONFIG = {
-  globalTrackingParam: "ref=finstack",
+  // Fallback parameter appended to standard external links
+  defaultParam: "ref=finstack",
+  
+  // Custom direct affiliate / CPA network tracking links
   customLinks: {
-    "tide": "[https://tide.co/?ref=YOUR_AFFILIATE_ID](https://tide.co/?ref=YOUR_AFFILIATE_ID)",
-    "revolut-business": "[https://revolut.com/business/?ref=YOUR_AFFILIATE_ID](https://revolut.com/business/?ref=YOUR_AFFILIATE_ID)",
-    "wise-business": "[https://wise.com/?ref=YOUR_AFFILIATE_ID](https://wise.com/?ref=YOUR_AFFILIATE_ID)"
+    "tide": "[https://www.tide.co/?ref=YOUR_AFFILIATE_ID](https://www.tide.co/?ref=YOUR_AFFILIATE_ID)",
+    "revolut-business": "[https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID](https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID)",
+    "wise-business": "[https://wise.com/business/?ref=YOUR_AFFILIATE_ID](https://wise.com/business/?ref=YOUR_AFFILIATE_ID)"
   }
 };
 
-### 2. Setting a Paid "Featured Partner"
-To pin a sponsored tool to top positions and display a **Featured** badge, set \`featured: true\` on any tool object in \`js/tools.js\`:
+```
 
-\`\`\`javascript
+### 2. Paid "Featured Partner" Badging
+
+To pin a sponsor to top positions across categories and activate the **Featured Partner** tag, set `featured: true` on any tool entry in `js/tools.js`:
+
+```javascript
 {
   id: "tide",
   name: "Tide",
   featured: true,
   category: "Business Banking",
-  // ... other properties
+  // ... tool specifications
 }
-\`\`\`
+
+```
 
 ---
 
-## 📂 File Architecture
+## 📂 Architecture & File Mapping
 
-- \`index.html\` — Homepage with category navigator, highlights, and verified badges
-- \`tools.html\` — Full 41-tool directory with multi-attribute search and category filters
-- \`finder.html\` — Interactive 3-step decision engine with dynamic match scoring
-- \`tool.html\` — Dynamic individual tool factsheets with side-by-side competitor comparison tables
-- \`for-providers.html\` — Inbound listing submission portal for fintech startups
-- \`methodology.html\` — Editorial review standards and sourcing verification policy
-- \`about.html\` — Brand overview and mission statement
-- \`privacy.html\` & \`terms.html\` — UK GDPR and compliance documentation
-- \`sitemap.xml\` & \`robots.txt\` — Search engine indexing and crawl directives
-- \`js/tools.js\` — Decoupled JSON data store, affiliate resolver, and tool taxonomy
-- \`js/app.js\` — Client-side search, category filtering, and interactive state management
-- \`css/style.css\` — Responsive design system with mobile-first breakpoints
+```text
+├── index.html            # Homepage, category navigation & trust badges
+├── tools.html            # Searchable 41-tool directory with live multi-attribute filters
+├── finder.html           # Interactive 3-step decision engine
+├── tool.html             # Dynamic tool factsheet with competitor comparison matrices
+├── for-providers.html    # B2B listing submission portal for fintech founders
+├── methodology.html      # Review scoring criteria and verification policy
+├── about.html            # Platform overview and editorial guidelines
+├── privacy.html          # UK GDPR compliance document
+├── terms.html            # Standard terms of service
+├── sitemap.xml           # XML sitemap for search crawlers
+├── robots.txt            # Search engine crawl directives
+├── js/
+│   ├── tools.js          # Decoupled data store, taxonomy & affiliate config
+│   └── app.js            # Client-side filtering, search & DOM rendering
+└── css/
+    └── style.css         # Responsive mobile-first CSS design system
+
+```
 
 ---
 
-## 📄 License & Transfer
-Full intellectual property, codebase, design assets, and dataset rights are transferred to the purchaser upon transaction completion.`;
+## 📄 Handover & Transfer Details
+
+* Full intellectual property, codebase, and complete rights are transferred upon transaction completion.
+* Simple 1-click GitHub repository transfer to the buyer's GitHub profile.
+
+```
+
+```
