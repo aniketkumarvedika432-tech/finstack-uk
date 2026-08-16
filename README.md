@@ -52,7 +52,7 @@ Outbound links route through the centralized `AFFILIATE_CONFIG` object located a
 
 ```javascript
 const AFFILIATE_CONFIG = {
-  // Fallback parameter appended to standard external links
+  // Fallback parameter appended to standard outbound links
   defaultParam: "ref=finstack",
   
   // Custom direct affiliate / CPA network tracking links
@@ -62,7 +62,6 @@ const AFFILIATE_CONFIG = {
     "wise-business": "https://wise.com/business/?ref=YOUR_AFFILIATE_ID"
   }
 };
-
 ```
 
 ### 2. Paid "Featured Partner" Badging
