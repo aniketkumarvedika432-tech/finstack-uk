@@ -38,3 +38,38 @@ const AFFILIATE_CONFIG = {
     "wise-business": "[https://wise.com/?ref=YOUR_AFFILIATE_ID](https://wise.com/?ref=YOUR_AFFILIATE_ID)"
   }
 };
+
+### 2. Setting a Paid "Featured Partner"
+To pin a sponsored tool to top positions and display a **Featured** badge, set \`featured: true\` on any tool object in \`js/tools.js\`:
+
+\`\`\`javascript
+{
+  id: "tide",
+  name: "Tide",
+  featured: true,
+  category: "Business Banking",
+  // ... other properties
+}
+\`\`\`
+
+---
+
+## 📂 File Architecture
+
+- \`index.html\` — Homepage with category navigator, highlights, and verified badges
+- \`tools.html\` — Full 41-tool directory with multi-attribute search and category filters
+- \`finder.html\` — Interactive 3-step decision engine with dynamic match scoring
+- \`tool.html\` — Dynamic individual tool factsheets with side-by-side competitor comparison tables
+- \`for-providers.html\` — Inbound listing submission portal for fintech startups
+- \`methodology.html\` — Editorial review standards and sourcing verification policy
+- \`about.html\` — Brand overview and mission statement
+- \`privacy.html\` & \`terms.html\` — UK GDPR and compliance documentation
+- \`sitemap.xml\` & \`robots.txt\` — Search engine indexing and crawl directives
+- \`js/tools.js\` — Decoupled JSON data store, affiliate resolver, and tool taxonomy
+- \`js/app.js\` — Client-side search, category filtering, and interactive state management
+- \`css/style.css\` — Responsive design system with mobile-first breakpoints
+
+---
+
+## 📄 License & Transfer
+Full intellectual property, codebase, design assets, and dataset rights are transferred to the purchaser upon transaction completion.`;
