@@ -344,7 +344,20 @@ body {
   letter-spacing: 0.5px;
   padding: 3px 8px;
   border-radius: var(--radius-full);
-  margin-bottom: 4px;
+}
+
+.badge-featured {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid #fde68a;
+  letter-spacing: 0.2px;
 }
 
 .card h3 {
