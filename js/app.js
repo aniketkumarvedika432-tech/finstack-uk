@@ -1,6 +1,6 @@
 /**
  * FinStack UK - Master Frontend Engine
- * Features: Brand Monograms, Dynamic Comparison Matrix, Click Tracking, Live Filtering, Verified Sourcing
+ * Features: Affiliate URL Resolution, Featured Badging, Brand Monograms, Dynamic Comparison Matrix, Click Tracking, Live Filtering
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,12 +40,25 @@ function updateLiveCounters() {
   });
 }
 
+function resolveLink(tool) {
+  if (typeof getAffiliateUrl === "function") {
+    return getAffiliateUrl(tool.id, tool.website);
+  }
+  return tool.website || "#";
+}
+
 function buildToolCard(tool, customBadge = "") {
   const card = document.createElement("div");
   card.className = "card";
   const initials = getInitials(tool.name);
+  const outboundUrl = resolveLink(tool);
+
   const sourceLabel = tool.ratingSource
     ? `<small style="font-size:0.7rem; color:#64748b; font-weight:500; display:block; margin-top:2px;">${esc(tool.ratingSource)}</small>`
+    : "";
+
+  const featuredBadge = tool.featured
+    ? `<span class="badge-featured">⭐ Featured</span>`
     : "";
 
   card.innerHTML = `
@@ -53,7 +66,10 @@ function buildToolCard(tool, customBadge = "") {
       <div class="card-brand-header">
         <div class="brand-avatar">${initials}</div>
         <div>
-          <span class="pill">${esc(tool.category)}</span>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+            <span class="pill" style="margin-bottom:0;">${esc(tool.category)}</span>
+            ${featuredBadge}
+          </div>
           <h3>${esc(tool.name)}</h3>
         </div>
       </div>
@@ -70,7 +86,7 @@ function buildToolCard(tool, customBadge = "") {
     <div class="meta-row"><strong>Pricing:</strong> <span>${esc(tool.pricing || "Transparent")}</span></div>
     <div class="actions">
       <a class="btn btn-secondary" href="tool.html?id=${encodeURIComponent(tool.id)}">Profile & Matrix</a>
-      <a class="btn outbound-track" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}">Visit ↗</a>
+      <a class="btn outbound-track" href="${esc(outboundUrl)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}">Visit ↗</a>
     </div>
   `;
   return card;
@@ -176,7 +192,10 @@ function initDirectory() {
     } else {
       if (empty) empty.style.display = "none";
       if (countEl) countEl.textContent = `Showing ${results.length} tool${results.length === 1 ? "" : "s"}`;
-      results.forEach(tool => grid.appendChild(buildToolCard(tool)));
+      
+      // Sort featured partners to top
+      const sorted = [...results].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      sorted.forEach(tool => grid.appendChild(buildToolCard(tool)));
     }
   }
 
@@ -256,13 +275,21 @@ function initProfile() {
 
   document.title = `${tool.name} Review & Feature Matrix | FinStack UK`;
   const initials = getInitials(tool.name);
+  const outboundUrl = resolveLink(tool);
   const competitors = TOOLS_DATA.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 2);
+
+  const featuredBadge = tool.featured
+    ? `<span class="badge-featured" style="margin-left:8px;">⭐ Featured Partner</span>`
+    : "";
 
   target.innerHTML = `
     <div style="margin-bottom:32px; display:flex; align-items:center; gap:16px;">
       <div class="brand-avatar" style="width:58px; height:58px; font-size:1.35rem;">${initials}</div>
       <div>
-        <span class="pill">${esc(tool.category)}</span>
+        <div style="display:flex; align-items:center;">
+          <span class="pill">${esc(tool.category)}</span>
+          ${featuredBadge}
+        </div>
         <h1 style="font-size: 2.25rem; font-weight:800; margin:4px 0 2px 0; letter-spacing:-0.5px;">${esc(tool.name)}</h1>
         <p style="font-size:1.05rem; color:#475569;">${esc(tool.tagline)}</p>
       </div>
@@ -285,7 +312,7 @@ function initProfile() {
         <div class="meta-row" style="margin-bottom:10px;"><strong>Pricing Model:</strong> <span>${esc(tool.pricing)}</span></div>
         <div class="meta-row" style="margin-bottom:10px;"><strong>Verified Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0 (${esc(tool.ratingSource || "Public Review Aggregators")})</span></div>
         <div class="meta-row" style="margin-bottom:10px;"><strong>UK Compliance:</strong> <span>HMRC / MTD Verified ✓</span></div>
-        <a class="btn btn-block outbound-track" href="${esc(tool.website)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}" style="margin-top:24px; height:46px;">Visit Official Website ↗</a>
+        <a class="btn btn-block outbound-track" href="${esc(outboundUrl)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}" style="margin-top:24px; height:46px;">Visit Official Website ↗</a>
       </div>
     </div>
 
