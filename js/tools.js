@@ -1,7 +1,39 @@
 /**
- * FinStack UK - Master Data Architecture
+ * FinStack UK - Master Data Architecture & Affiliate Router
  * 100% Sourced against Trustpilot UK, G2, and Capterra
  */
+
+// ===================================================
+// 1. MONETISATION & AFFILIATE ROUTER CONFIGURATION
+// ===================================================
+const AFFILIATE_CONFIG = {
+  // Global parameter automatically appended to standard outbound links
+  defaultParam: "ref=finstack",
+
+  // Custom direct affiliate / CPA partner URLs
+  customLinks: {
+    "tide": "https://www.tide.co/?ref=YOUR_AFFILIATE_ID",
+    "revolut-business": "https://www.revolut.com/business/?ref=YOUR_AFFILIATE_ID",
+    "wise-business": "https://wise.com/business/?ref=YOUR_AFFILIATE_ID",
+    "xero": "https://www.xero.com/uk/?ref=YOUR_AFFILIATE_ID",
+    "quickbooks": "https://quickbooks.intuit.com/uk/?ref=YOUR_AFFILIATE_ID"
+  }
+};
+
+/**
+ * Resolves an outbound tool link with custom tracking or fallback query parameters.
+ * @param {string} toolId - The unique ID of the tool (e.g., "tide").
+ * @param {string} fallbackUrl - The base website URL of the tool.
+ * @returns {string} Fully formatted outbound affiliate link.
+ */
+function getAffiliateUrl(toolId, fallbackUrl) {
+  if (AFFILIATE_CONFIG.customLinks && AFFILIATE_CONFIG.customLinks[toolId]) {
+    return AFFILIATE_CONFIG.customLinks[toolId];
+  }
+  if (!fallbackUrl) return "#";
+  const separator = fallbackUrl.includes("?") ? "&" : "?";
+  return `${fallbackUrl}${separator}${AFFILIATE_CONFIG.defaultParam}`;
+}
 
 const MONETISATION_CONFIG = {
   defaultAttributionParam: "ref",
@@ -9,6 +41,9 @@ const MONETISATION_CONFIG = {
   enableClickLogging: true
 };
 
+// ===================================================
+// 2. MASTER TOOL DATASET (41 VERIFIED PROVIDERS)
+// ===================================================
 const TOOLS_DATA = [
   {
     id: "xero",
@@ -669,5 +704,5 @@ const TOOLS_DATA = [
 ];
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { TOOLS_DATA, MONETISATION_CONFIG };
+  module.exports = { TOOLS_DATA, MONETISATION_CONFIG, AFFILIATE_CONFIG, getAffiliateUrl };
 }
