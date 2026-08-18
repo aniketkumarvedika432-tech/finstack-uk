@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Find My Tool | FinStack UK</title>
-  <meta name="description" content="Get a tailored shortlist of UK financial software for your business.">
-  <!-- Favicon & Browser Icons -->
+  <title>UK FinTech Stack Finder | FinStack UK</title>
+  <meta name="description" content="Get a tailored shortlist of UK financial software for your business structure.">
   <link rel="icon" type="image/png" href="og-image.png">
   <link rel="shortcut icon" href="og-image.png">
   <link rel="apple-touch-icon" href="og-image.png">
@@ -27,6 +26,7 @@
 
   <main class="container">
     <div class="section-head" style="text-align: center; display: block; margin-top: 40px;">
+      <span class="eyebrow">Interactive Shortlist Engine</span>
       <h1>Find the Right Tool for Your Business</h1>
       <p>Answer three quick questions to generate your tailored software shortlist.</p>
     </div>
@@ -38,16 +38,16 @@
           <select name="type" id="type" required>
             <option value="">Select structure...</option>
             <option value="sole-trader">Sole Trader / Freelancer</option>
-            <option value="limited-company">Limited Company (LTD)</option>
+            <option value="limited-company" selected>Limited Company (LTD)</option>
             <option value="startups">Startup / High Growth</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="need">2. Primary Need</label>
+          <label for="need">2. Primary Operational Need</label>
           <select name="need" id="need" required>
             <option value="">Select primary need...</option>
-            <option value="Accounting">Accounting & Bookkeeping</option>
+            <option value="Accounting" selected>Accounting & Bookkeeping (MTD)</option>
             <option value="Business Banking">Business Current Account</option>
             <option value="Payments">Online & Card Payments</option>
             <option value="Expenses">Expense & Card Controls</option>
@@ -62,8 +62,9 @@
           <label for="priority">3. Operating Priority</label>
           <select name="priority" id="priority" required>
             <option value="">Select priority...</option>
-            <option value="low-cost">Low Cost / Free Entry Tier</option>
+            <option value="low-cost" selected>Low Cost / Free Entry Tier</option>
             <option value="international">International / Multi-Currency</option>
+            <option value="compliance">Strict UK Compliance & MTD Ready</option>
             <option value="all-in-one">All-in-One Integration</option>
           </select>
         </div>
@@ -82,6 +83,10 @@
     <div class="footer-inner">
       <div><strong>FinStack.uk</strong><br><small>Independent UK fintech and SME software directory.</small></div>
       <div><a href="about.html">About</a> · <a href="methodology.html">Methodology</a> · <a href="for-providers.html">For providers</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
+      <a href="https://buysellstartups.com/listings/finstack-uk-msvek53l" target="_blank" rel="noopener"><img src="https://buysellstartups.com/api/badge/finstack-uk-msvek53l" alt="For Sale on Buy Sell Startups"/></a>
+      <a href="https://maidensail.com/startup/finstack" rel="dofollow"><img src="https://maidensail.com/badge/finstack.svg" alt="Listed on Maidensail" height="36"></a>
     </div>
   </footer>
 
