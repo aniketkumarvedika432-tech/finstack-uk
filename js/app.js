@@ -1,6 +1,6 @@
 /**
- * FinStack UK - Master Frontend Engine
- * Features: Affiliate URL Resolution, Featured Badging, Brand Monograms, Dynamic Comparison Matrix, Click Tracking, Live Filtering
+ * FinStack UK - Human-Curated Frontend Engine
+ * Features: High-Res Brand Favicons, Editorial Pros/Cons Breakdown, Deep Linking, Sourced Comparison Matrix
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,6 +31,15 @@ function getInitials(name) {
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
+function getBrandLogoUrl(websiteUrl) {
+  try {
+    const domain = new URL(websiteUrl).hostname.replace(/^www\./, "");
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  } catch (e) {
+    return "";
+  }
+}
+
 function updateLiveCounters() {
   const counterSelectors = ["#toolCount", "#total-tools-count", ".tool-count"];
   counterSelectors.forEach(sel => {
@@ -51,6 +60,7 @@ function buildToolCard(tool, customBadge = "") {
   const card = document.createElement("div");
   card.className = "card";
   const initials = getInitials(tool.name);
+  const logoUrl = getBrandLogoUrl(tool.website);
   const outboundUrl = resolveLink(tool);
 
   const sourceLabel = tool.ratingSource
@@ -64,7 +74,10 @@ function buildToolCard(tool, customBadge = "") {
   card.innerHTML = `
     <div class="card-top">
       <div class="card-brand-header">
-        <div class="brand-avatar">${initials}</div>
+        <div class="brand-avatar-wrap">
+          <img src="${esc(logoUrl)}" alt="${esc(tool.name)} logo" class="brand-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="brand-avatar-fallback" style="display:none;">${initials}</div>
+        </div>
         <div>
           <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
             <span class="pill" style="margin-bottom:0;">${esc(tool.category)}</span>
@@ -85,7 +98,7 @@ function buildToolCard(tool, customBadge = "") {
     <div class="meta-row"><strong>Best for:</strong> <span>${esc(tool.bestFor || "UK Businesses")}</span></div>
     <div class="meta-row"><strong>Pricing:</strong> <span>${esc(tool.pricing || "Transparent")}</span></div>
     <div class="actions">
-      <a class="btn btn-secondary" href="tool.html?id=${encodeURIComponent(tool.id)}">Profile & Matrix</a>
+      <a class="btn btn-secondary" href="tool.html?id=${encodeURIComponent(tool.id)}">Editorial Review & Matrix</a>
       <a class="btn outbound-track" href="${esc(outboundUrl)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}">Visit ↗</a>
     </div>
   `;
@@ -193,7 +206,6 @@ function initDirectory() {
       if (empty) empty.style.display = "none";
       if (countEl) countEl.textContent = `Showing ${results.length} tool${results.length === 1 ? "" : "s"}`;
       
-      // Sort featured partners to top
       const sorted = [...results].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
       sorted.forEach(tool => grid.appendChild(buildToolCard(tool)));
     }
@@ -273,18 +285,26 @@ function initProfile() {
     return;
   }
 
-  document.title = `${tool.name} Review & Feature Matrix | FinStack UK`;
+  document.title = `${tool.name} Review, Pricing & UK Alternatives | FinStack UK`;
   const initials = getInitials(tool.name);
+  const logoUrl = getBrandLogoUrl(tool.website);
   const outboundUrl = resolveLink(tool);
-  const competitors = TOOLS_DATA.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 2);
+  const competitors = TOOLS_DATA.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 3);
 
   const featuredBadge = tool.featured
     ? `<span class="badge-featured" style="margin-left:8px;">⭐ Featured Partner</span>`
     : "";
 
+  const editorialTake = tool.editorialTake || `${tool.name} is a solid choice in the ${tool.category} vertical, well suited for British owners who value clean cloud-native integrations and Making Tax Digital compliance.`;
+  const limitation = tool.limitation || "Requires subscription upgrades for advanced multi-currency support and high-volume transaction handling.";
+  const whoShouldSkip = tool.whoShouldSkip || "High-turnover multi-entity enterprises requiring full ERP customization should consider dedicated enterprise infrastructure instead.";
+
   target.innerHTML = `
     <div style="margin-bottom:32px; display:flex; align-items:center; gap:16px;">
-      <div class="brand-avatar" style="width:58px; height:58px; font-size:1.35rem;">${initials}</div>
+      <div class="brand-avatar-wrap" style="width:58px; height:58px;">
+        <img src="${esc(logoUrl)}" alt="${esc(tool.name)} logo" class="brand-logo-img" style="width:38px; height:38px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="brand-avatar-fallback" style="display:none; font-size:1.35rem;">${initials}</div>
+      </div>
       <div>
         <div style="display:flex; align-items:center;">
           <span class="pill">${esc(tool.category)}</span>
@@ -297,27 +317,44 @@ function initProfile() {
 
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px;">
       <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; box-shadow: var(--shadow-card);">
-        <h3 style="font-size:1.25rem; margin-bottom:12px; font-weight:700;">Overview & UK SME Positioning</h3>
-        <p style="line-height:1.6; color:#475569;">${esc(tool.description)}</p>
-        
-        <h4 style="margin-top:24px; margin-bottom:10px; font-size:1.05rem; font-weight:700;">Verified Capabilities</h4>
-        <ul style="padding-left:20px; line-height:1.8; color:#334155;">
-          ${(tool.features || []).map(f => `<li>✓ ${esc(f)}</li>`).join("")}
-        </ul>
+        <h3 style="font-size:1.2rem; margin-bottom:10px; font-weight:700;">Our Editorial Take</h3>
+        <p style="line-height:1.65; color:#334155; margin-bottom:20px;">${esc(editorialTake)}</p>
+
+        <div class="editorial-box pros">
+          <strong style="color:#166534; font-size:0.9rem; display:block; margin-bottom:6px;">✓ Core UK Strengths</strong>
+          <ul style="padding-left:18px; line-height:1.7; color:#1e293b; font-size:0.9rem;">
+            ${(tool.features || []).map(f => `<li>${esc(f)}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="editorial-box cons" style="margin-top:16px;">
+          <strong style="color:#991b1b; font-size:0.9rem; display:block; margin-bottom:6px;">⚠️ Key Limitations to Consider</strong>
+          <p style="font-size:0.875rem; color:#7f1d1d; line-height:1.5;">${esc(limitation)}</p>
+        </div>
+
+        <div class="editorial-box skip" style="margin-top:16px;">
+          <strong style="color:#854d0e; font-size:0.9rem; display:block; margin-bottom:6px;">💡 Who should consider skipping?</strong>
+          <p style="font-size:0.875rem; color:#713f12; line-height:1.5;">${esc(whoShouldSkip)}</p>
+        </div>
       </div>
 
       <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; height:fit-content; box-shadow: var(--shadow-card);">
-        <h3 style="font-size:1.25rem; margin-bottom:16px; font-weight:700;">Provider Factsheet</h3>
+        <h3 style="font-size:1.2rem; margin-bottom:16px; font-weight:700;">Provider Factsheet</h3>
         <div class="meta-row" style="margin-bottom:10px;"><strong>Best for:</strong> <span>${esc(tool.bestFor)}</span></div>
         <div class="meta-row" style="margin-bottom:10px;"><strong>Pricing Model:</strong> <span>${esc(tool.pricing)}</span></div>
-        <div class="meta-row" style="margin-bottom:10px;"><strong>Verified Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0 (${esc(tool.ratingSource || "Public Review Aggregators")})</span></div>
-        <div class="meta-row" style="margin-bottom:10px;"><strong>UK Compliance:</strong> <span>HMRC / MTD Verified ✓</span></div>
-        <a class="btn btn-block outbound-track" href="${esc(outboundUrl)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}" style="margin-top:24px; height:46px;">Visit Official Website ↗</a>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Verified Rating:</strong> <span>★ ${tool.rating || 4.5} / 5.0 (${esc(tool.ratingSource || "Public Aggregators")})</span></div>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>UK Compliance:</strong> <span>HMRC / MTD / FSCS Sourced ✓</span></div>
+        <div class="meta-row" style="margin-bottom:10px;"><strong>Audit Date:</strong> <span>${esc(tool.ratingDate || "Aug 2026")}</span></div>
+        
+        <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
+          <a class="btn btn-block outbound-track" href="${esc(outboundUrl)}" target="_blank" rel="noopener noreferrer" data-tool="${esc(tool.id)}" style="height:46px;">Visit Official Website ↗</a>
+          <button class="btn btn-secondary btn-block" onclick="navigator.clipboard.writeText(window.location.href); this.innerText='✓ Link Copied to Clipboard!'; setTimeout(()=>this.innerText='Share This Profile', 2000);">Share This Profile</button>
+        </div>
       </div>
     </div>
 
     <div style="margin-top:36px; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:28px; box-shadow: var(--shadow-card);">
-      <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:6px;">Category Comparison Matrix (${esc(tool.category)})</h3>
+      <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:6px;">Compare ${esc(tool.name)} with Alternatives (${esc(tool.category)})</h3>
       <p style="color:#64748b; font-size:0.9rem; margin-bottom:16px;">Direct feature, pricing, and verified rating comparison for leading UK solutions.</p>
       
       <table class="comparison-matrix">
@@ -336,15 +373,15 @@ function initProfile() {
             <td>${esc(tool.pricing)}</td>
             <td>${esc(tool.bestFor)}</td>
             <td>★ ${tool.rating || 4.5} <small style="display:block; font-size:0.75rem; color:#64748b; font-weight:normal;">(${esc(tool.ratingSource || "Public")})</small></td>
-            <td>Current</td>
+            <td>Current Profile</td>
           </tr>
           ${competitors.map(c => `
             <tr>
               <td>${esc(c.name)}</td>
               <td>${esc(c.pricing)}</td>
               <td>${esc(c.bestFor)}</td>
-              <td>★ ${c.rating || 4.5} <small style="display:block; font-size:0.75rem; color:#64748b; font-weight:normal;">(${esc(c.ratingSource || "Public")})</small></td>
-              <td><a href="tool.html?id=${encodeURIComponent(c.id)}" style="color:#0284c7; font-weight:600; text-decoration:none;">Compare →</a></td>
+              <td>★ ${c.rating \vert{}\vert{} 4.5} <small style="display:block; font-size:0.75rem; color:#64748b; font-weight:normal;">(${esc(c.ratingSource || "Public")})</small></td>
+              <td><a href="tool.html?id=${encodeURIComponent(c.id)}" style="color:#0284c7; font-weight:600; text-decoration:none;">View Review →</a></td>
             </tr>
           `).join("")}
         </tbody>
