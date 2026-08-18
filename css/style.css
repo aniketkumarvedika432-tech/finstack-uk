@@ -318,7 +318,7 @@ body {
   gap: 12px;
 }
 
-/* BRAND LOGO AVATARS & FALLBACKS */
+/* BRAND AVATARS */
 .brand-avatar-wrap {
   width: 44px;
   height: 44px;
@@ -422,7 +422,7 @@ body {
   }
 }
 
-/* EDITORIAL BREAKDOWN BOXES */
+/* EDITORIAL CALLOUT BOXES */
 .editorial-box {
   padding: 16px;
   border-radius: var(--radius-md);
