@@ -318,20 +318,41 @@ body {
   gap: 12px;
 }
 
-.brand-avatar {
+/* BRAND LOGO AVATARS & FALLBACKS */
+.brand-avatar-wrap {
   width: 44px;
   height: 44px;
   border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  padding: 4px;
+}
+
+.brand-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.brand-avatar-fallback, .brand-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: -0.5px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .pill {
@@ -399,6 +420,28 @@ body {
   .actions {
     grid-template-columns: 1fr;
   }
+}
+
+/* EDITORIAL BREAKDOWN BOXES */
+.editorial-box {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  margin-top: 12px;
+}
+
+.editorial-box.pros {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.editorial-box.cons {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.editorial-box.skip {
+  background: #fefce8;
+  border: 1px solid #fef08a;
 }
 
 /* BUTTONS */
@@ -534,7 +577,7 @@ select:focus, input[type="text"]:focus {
   color: var(--text-dark);
 }
 
-/* FEATURE BANNER & FOOTER */
+/* FEATURE BANNER & TRUST PILLARS */
 .feature {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
@@ -616,6 +659,7 @@ select:focus, input[type="text"]:focus {
   margin-bottom: 16px;
 }
 
+/* FOOTER */
 .footer {
   background: #ffffff;
   border-top: 1px solid var(--border);
