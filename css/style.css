@@ -75,7 +75,7 @@ body {
 .navlinks {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 .navlinks a {
@@ -140,9 +140,9 @@ body {
 }
 
 .hero h1 {
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -1px;
   color: var(--text-dark);
   margin-bottom: 16px;
@@ -341,7 +341,7 @@ body {
   border-radius: 4px;
 }
 
-.brand-avatar-fallback, .brand-avatar {
+.brand-avatar-fallback {
   width: 100%;
   height: 100%;
   border-radius: 6px;
