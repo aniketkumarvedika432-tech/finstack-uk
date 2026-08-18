@@ -3,69 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FinStack UK — Verified Financial Tools & Software for UK SMEs</title>
-  <meta name="description" content="Search and compare verified UK business banking, accounting, payments, lending, and payroll software with transparent pricing and MTD compliance.">
-  <meta name="keywords" content="UK fintech directory, UK business banking, MTD accounting software, SME financial tools, Making Tax Digital, UK payroll software">
+  <title>FinStack UK — UK Business Banking, Accounting & Tax Directory</title>
+  <meta name="description" content="Independent directory and decision guide for UK small business finance software. Compare 41 audited banking, accounting, payments, and payroll tools.">
   <link rel="canonical" href="https://finstack-uk.vercel.app/">
 
-  <!-- Open Graph / Facebook / LinkedIn -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://finstack-uk.vercel.app/">
-  <meta property="og:title" content="FinStack UK — Verified Financial Tools & Software for UK SMEs">
-  <meta property="og:description" content="Search and compare 40+ verified UK business accounts, accounting, payments, and payroll tools organized for British small businesses.">
-  <meta property="og:image" content="https://finstack-uk.vercel.app/og-image.png">
-
-  <!-- Twitter / X Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://finstack-uk.vercel.app/">
-  <meta name="twitter:title" content="FinStack UK — Verified Financial Tools & Software for UK SMEs">
-  <meta name="twitter:description" content="Search and compare 40+ verified UK business accounts, accounting, payments, and payroll tools organized for British small businesses.">
-  <meta name="twitter:image" content="https://finstack-uk.vercel.app/og-image.png">
-
-  <!-- JSON-LD Schema (WebSite & FAQ Combined) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "name": "FinStack UK",
-        "url": "https://finstack-uk.vercel.app/",
-        "description": "Verified directory and decision engine for UK SME fintech, accounting, and business banking tools.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://finstack-uk.vercel.app/tools.html?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is FinStack UK?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "FinStack UK is an independent fintech directory and interactive recommendation engine helping UK SMEs, sole traders, and limited companies compare verified financial tools."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are the fintech ratings on FinStack verified?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, all ratings are sourced directly from verified public review platforms including Trustpilot UK, G2, and Capterra with audit timestamps."
-            }
-          }
-        ]
-      }
-    ]
-  }
-  </script>
-<!-- Favicon & Browser Icons -->
+  <!-- Favicon & Touch Icons -->
   <link rel="icon" type="image/png" href="og-image.png">
   <link rel="shortcut icon" href="og-image.png">
   <link rel="apple-touch-icon" href="og-image.png">
+
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://finstack-uk.vercel.app/">
+  <meta property="og:title" content="FinStack UK — UK SME Financial Software Directory">
+  <meta property="og:description" content="Compare verified UK business accounts, MTD accounting packages, and payment gateways with transparent fee structures.">
+  <meta property="og:image" content="https://finstack-uk.vercel.app/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FinStack UK — UK SME Financial Software Directory">
+  <meta name="twitter:description" content="Compare verified UK business accounts, MTD accounting packages, and payment gateways with transparent fee structures.">
+  <meta name="twitter:image" content="https://finstack-uk.vercel.app/og-image.png">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "FinStack UK",
+    "url": "https://finstack-uk.vercel.app/",
+    "description": "Independent directory and decision engine for UK SME fintech, accounting, and business banking tools.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://finstack-uk.vercel.app/tools.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
@@ -76,6 +49,7 @@
       <div class="navlinks">
         <a href="tools.html">Directory</a>
         <a href="finder.html">Find my tools</a>
+        <a href="about.html">About</a>
         <a href="methodology.html">Methodology</a>
         <a class="nav-cta" href="for-providers.html">For providers</a>
       </div>
@@ -85,20 +59,20 @@
   <header class="hero">
     <div class="hero-inner">
       <div>
-        <span class="eyebrow">🇬🇧 Verified UK SME Fintech</span>
-        <h1>Find the right financial tools for your business.</h1>
-        <p>Explore accounting, banking, payments, lending, payroll, expenses and compliance software — organised around real UK SME use cases.</p>
+        <span class="eyebrow">🇬🇧 UK Small Business Finance Guide</span>
+        <h1>Choose the right financial tools for your UK business.</h1>
+        <p>Independent breakdowns of UK business accounts, MTD-compliant accounting software, payment processors, and payroll engines — tailored to British company structures.</p>
         <div class="hero-actions">
-          <a class="btn" href="tools.html">Explore Directory →</a>
-          <a class="btn btn-secondary" href="finder.html">Use Tool Finder</a>
+          <a class="btn" href="tools.html">Browse Directory →</a>
+          <a class="btn btn-secondary" href="finder.html">Use Stack Finder</a>
         </div>
       </div>
       <div class="hero-card">
-        <h3>FinStack Directory Summary</h3>
-        <div class="hero-stat"><span>Verified UK Tools</span><b id="toolCount">40+</b></div>
-        <div class="hero-stat"><span>SME Categories</span><b>8 Categories</b></div>
-        <div class="hero-stat"><span>MTD / HMRC Ready</span><b>Verified</b></div>
-        <div class="hero-stat"><span>Editorial Independence</span><b>100% Free</b></div>
+        <h3>Directory Benchmark</h3>
+        <div class="hero-stat"><span>Verified Software Products</span><b id="toolCount">41+</b></div>
+        <div class="hero-stat"><span>Supported Categories</span><b>8 Verticals</b></div>
+        <div class="hero-stat"><span>HMRC MTD / RTI Status</span><b>Audited</b></div>
+        <div class="hero-stat"><span>Commercial Transparency</span><b>100% Free Access</b></div>
       </div>
     </div>
   </header>
@@ -106,19 +80,19 @@
   <section class="container">
     <div class="section-head">
       <div>
-        <h2>Explore by need</h2>
-        <p>Start with the problem you are trying to solve, then compare relevant providers.</p>
+        <h2>Explore by category</h2>
+        <p>Compare software tools organized by specific operational requirements.</p>
       </div>
     </div>
     <div class="categories">
-      <a class="cat" href="tools.html?cat=Accounting"><strong>Accounting</strong><span>Bookkeeping, invoicing & MTD filing</span></a>
-      <a class="cat" href="tools.html?cat=Business%20Banking"><strong>Business Banking</strong><span>Current accounts, FX & multi-currency</span></a>
-      <a class="cat" href="tools.html?cat=Payments"><strong>Payments</strong><span>Online gateways, POS & direct debit</span></a>
-      <a class="cat" href="tools.html?cat=Lending"><strong>Lending</strong><span>Working capital & SME credit lines</span></a>
-      <a class="cat" href="tools.html?cat=Tax%20%26%20Compliance"><strong>Tax & Compliance</strong><span>HMRC filing, EMI options & cap tables</span></a>
+      <a class="cat" href="tools.html?cat=Accounting"><strong>Accounting</strong><span>MTD VAT filing, bookkeeping & invoicing</span></a>
+      <a class="cat" href="tools.html?cat=Business%20Banking"><strong>Business Banking</strong><span>Current accounts, FSCS coverage & FX</span></a>
+      <a class="cat" href="tools.html?cat=Payments"><strong>Payments</strong><span>Online gateways, POS & Direct Debit</span></a>
+      <a class="cat" href="tools.html?cat=Lending"><strong>Lending</strong><span>Working capital & SME credit facilities</span></a>
+      <a class="cat" href="tools.html?cat=Tax%20%26%20Compliance"><strong>Tax & Compliance</strong><span>CT600 filing, EMI schemes & cap tables</span></a>
       <a class="cat" href="tools.html?cat=Payroll"><strong>Payroll</strong><span>Auto-enrolment pensions & RTI submissions</span></a>
-      <a class="cat" href="tools.html?cat=Expenses"><strong>Expenses</strong><span>Corporate cards & OCR receipt scanning</span></a>
-      <a class="cat" href="tools.html?cat=Billing"><strong>Billing</strong><span>SaaS recurring billing & subscriptions</span></a>
+      <a class="cat" href="tools.html?cat=Expenses"><strong>Expenses</strong><span>Corporate cards & OCR receipt capture</span></a>
+      <a class="cat" href="tools.html?cat=Billing"><strong>Billing</strong><span>Recurring subscriptions & UK/EU VAT</span></a>
     </div>
   </section>
 
@@ -126,10 +100,10 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <h2>Featured tool directory</h2>
-          <p>Search verified providers and open a dedicated profile for each tool.</p>
+          <h2>Featured software solutions</h2>
+          <p>Hand-curated software fact sheets with verified public review benchmarks.</p>
         </div>
-        <a class="btn btn-secondary" href="tools.html">View all tools →</a>
+        <a class="btn btn-secondary" href="tools.html">View all 41 tools →</a>
       </div>
       <div class="grid" id="toolGrid"></div>
       <div class="empty-state-box" id="empty">
@@ -140,48 +114,55 @@
 
   <section class="container">
     <div class="feature">
-      <h2>Not sure which stack fits your business?</h2>
-      <p>Answer 3 simple questions about your company structure and FinStack will recommend a tailored shortlist.</p>
-      <a class="btn btn-light" href="finder.html" style="padding: 0 24px; height: 46px; font-weight: 700;">Use the free finder →</a>
+      <h2>Need a personalized stack recommendation?</h2>
+      <p>Select your company structure and operating priorities to generate a tailored 3-tool shortlist in seconds.</p>
+      <a class="btn btn-light" href="finder.html" style="padding: 0 24px; height: 46px; font-weight: 700;">Launch Stack Finder →</a>
     </div>
   </section>
 
   <section class="container">
     <div class="section-head">
       <div>
-        <h2>Why FinStack?</h2>
-        <p>A focused, UK-first alternative to generic software directories.</p>
+        <h2>How FinStack evaluates tools</h2>
+        <p>A UK-centric approach to software discovery and compliance evaluation.</p>
       </div>
     </div>
     <div class="steps">
       <div class="step">
         <span class="step-num">01</span>
-        <h3>UK-First Workflows</h3>
-        <p>Organised around UK VAT, HMRC Making Tax Digital (MTD), and Companies House requirements.</p>
+        <h3>HMRC & FSCS Verification</h3>
+        <p>Every tool is audited for British regulatory compliance, including Making Tax Digital (MTD), CIS tracking, and statutory FSCS ring-fencing[cite: 1, 4].</p>
       </div>
       <div class="step">
         <span class="step-num">02</span>
-        <h3>Decision-Oriented</h3>
-        <p>Interactive shortlists and clear feature matrices help founders choose software in under 2 minutes.</p>
+        <h3>Practical Limitations Included</h3>
+        <p>We outline specific software limitations, invoice caps, and tier lock-ins so founders understand the trade-offs before signing up[cite: 1, 4].</p>
       </div>
       <div class="step">
         <span class="step-num">03</span>
-        <h3>Curated & Transparent</h3>
-        <p>Accurate UK pricing and verified partner listings with transparent feature breakdowns.</p>
+        <h3>Transparent Review Sourcing</h3>
+        <p>All ratings are cross-referenced with public Trustpilot UK, G2, and Capterra scores with explicit timestamp audits[cite: 4].</p>
       </div>
     </div>
   </section>
 
-<footer class="footer">
+  <footer class="footer">
     <div class="footer-inner">
-      <div><strong>FinStack.uk</strong><br><small>Independent UK fintech and SME software directory.</small></div>
-      <div><a href="about.html">About</a> · <a href="methodology.html">Methodology</a> · <a href="for-providers.html">For providers</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+      <div><strong>FinStack.uk</strong><br><small>Independent UK fintech and small business software directory.</small></div>
+      <div>
+        <a href="about.html">About</a> · 
+        <a href="methodology.html">Methodology</a> · 
+        <a href="for-providers.html">For providers</a> · 
+        <a href="privacy.html">Privacy</a> · 
+        <a href="terms.html">Terms</a>
+      </div>
     </div>
     <div style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
       <a href="https://buysellstartups.com/listings/finstack-uk-msvek53l" target="_blank" rel="noopener"><img src="https://buysellstartups.com/api/badge/finstack-uk-msvek53l" alt="For Sale on Buy Sell Startups"/></a>
       <a href="https://maidensail.com/startup/finstack" rel="dofollow"><img src="https://maidensail.com/badge/finstack.svg" alt="Listed on Maidensail" height="36"></a>
     </div>
   </footer>
+
   <script src="js/tools.js"></script>
   <script src="js/app.js"></script>
 </body>
