@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://finstack-uk.vercel.app/sitemap.xml
