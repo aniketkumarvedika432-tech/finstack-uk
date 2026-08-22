@@ -1,0 +1,335 @@
+{
+  "checkedAt": "2026-08-22T18:21:40.812Z",
+  "totalChecked": 41,
+  "failingCount": 9,
+  "results": [
+    {
+      "id": "xero",
+      "name": "Xero",
+      "website": "https://www.xero.com/uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "quickbooks",
+      "name": "QuickBooks Online",
+      "website": "https://quickbooks.intuit.com/uk/",
+      "ok": false,
+      "status": null,
+      "error": "This operation was aborted"
+    },
+    {
+      "id": "freeagent",
+      "name": "FreeAgent",
+      "website": "https://www.freeagent.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "sage",
+      "name": "Sage Accounting",
+      "website": "https://www.sage.com/en-gb/",
+      "ok": false,
+      "status": 403,
+      "error": null
+    },
+    {
+      "id": "clearbooks",
+      "name": "Clear Books",
+      "website": "https://www.clearbooks.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "kashflow",
+      "name": "KashFlow",
+      "website": "https://www.kashflow.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "float",
+      "name": "Float Cash Flow",
+      "website": "https://floatapp.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "futuroli",
+      "name": "Futrli (by Sage)",
+      "website": "https://www.futrli.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "syft-analytics",
+      "name": "Syft Analytics",
+      "website": "https://www.syftanalytics.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "crunch",
+      "name": "Crunch",
+      "website": "https://www.crunch.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "revolut-business",
+      "name": "Revolut Business",
+      "website": "https://www.revolut.com/business/",
+      "ok": false,
+      "status": 403,
+      "error": null
+    },
+    {
+      "id": "wise-business",
+      "name": "Wise Business",
+      "website": "https://wise.com/gb/business/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "tide",
+      "name": "Tide",
+      "website": "https://www.tide.co/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "starling-bank",
+      "name": "Starling Bank",
+      "website": "https://www.starlingbank.com/business-account/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "monzo-business",
+      "name": "Monzo Business",
+      "website": "https://monzo.com/business/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "ancon",
+      "name": "ANNA Money",
+      "website": "https://anna.money/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "mettle",
+      "name": "Mettle by NatWest",
+      "website": "https://www.mettle.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "website": "https://stripe.com/gb",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "gocardless",
+      "name": "GoCardless",
+      "website": "https://gocardless.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "sumup",
+      "name": "SumUp",
+      "website": "https://www.sumup.com/en-gb/",
+      "ok": false,
+      "status": 405,
+      "error": null
+    },
+    {
+      "id": "zettle",
+      "name": "Zettle by PayPal",
+      "website": "https://www.zettle.com/gb",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "square",
+      "name": "Square UK",
+      "website": "https://squareup.com/gb/en",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "mollie",
+      "name": "Mollie",
+      "website": "https://www.mollie.com/gb",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "chaser",
+      "name": "Chaser",
+      "website": "https://www.chaserhq.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "dext",
+      "name": "Dext Prepare",
+      "website": "https://dext.com/uk",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "pleo",
+      "name": "Pleo",
+      "website": "https://www.pleo.io/en-gb",
+      "ok": false,
+      "status": 404,
+      "error": null
+    },
+    {
+      "id": "soldo",
+      "name": "Soldo",
+      "website": "https://www.soldo.com/en-gb/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "expensify",
+      "name": "Expensify",
+      "website": "https://use.expensify.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "moss",
+      "name": "Moss",
+      "website": "https://getmoss.com/en-gb/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "spendesk",
+      "name": "Spendesk",
+      "website": "https://www.spendesk.com/en-gb/",
+      "ok": false,
+      "status": 404,
+      "error": null
+    },
+    {
+      "id": "autoentry",
+      "name": "AutoEntry",
+      "website": "https://www.autoentry.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "brightpay",
+      "name": "BrightPay",
+      "website": "https://www.brightpay.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "employment-hero",
+      "name": "Employment Hero Payroll",
+      "website": "https://employmenthero.com/uk/payroll/",
+      "ok": false,
+      "status": 404,
+      "error": null
+    },
+    {
+      "id": "payfit",
+      "name": "PayFit",
+      "website": "https://payfit.com/gb/",
+      "ok": false,
+      "status": 404,
+      "error": null
+    },
+    {
+      "id": "nest-pensions",
+      "name": "Nest Pensions",
+      "website": "https://www.nestpensions.org.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "capdesk",
+      "name": "Capdesk (by Carta)",
+      "website": "https://capdesk.com/",
+      "ok": false,
+      "status": 403,
+      "error": null
+    },
+    {
+      "id": "taxfiler",
+      "name": "Taxfiler (by IRIS)",
+      "website": "https://taxfiler.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "chargebee",
+      "name": "Chargebee",
+      "website": "https://www.chargebee.com/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "iwoca",
+      "name": "iwoca",
+      "website": "https://www.iwoca.co.uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "funding-circle",
+      "name": "Funding Circle",
+      "website": "https://www.fundingcircle.com/uk/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "capital-on-tap",
+      "name": "Capital on Tap",
+      "website": "https://www.capitalontap.com/en/",
+      "ok": true,
+      "status": 200,
+      "error": null
+    }
+  ]
+}
