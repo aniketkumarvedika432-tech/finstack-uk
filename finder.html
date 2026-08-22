@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UK FinTech Stack Finder | FinStack UK</title>
+  <meta name="description" content="Answer 3 quick questions to receive a tailored shortlist of UK financial software for your specific business entity.">
+  <link rel="canonical" href="https://finstack-uk.vercel.app/finder.html">
+
+  <link rel="icon" type="image/png" href="og-image.png">
+  <link rel="shortcut icon" href="og-image.png">
+  <link rel="apple-touch-icon" href="og-image.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">FinStack<span>.uk</span></a>
+      <div class="navlinks">
+        <a href="tools.html">Directory</a>
+        <a href="finder.html" class="active">Find my tools</a>
+        <a href="about.html">About</a>
+        <a href="methodology.html">Methodology</a>
+        <a class="nav-cta" href="for-providers.html">For providers</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top: 32px; padding-bottom: 64px;">
+    <div class="section-head" style="text-align: center; display: block; margin-top: 20px;">
+      <span class="eyebrow">Interactive Stack Finder</span>
+      <h1>Find the right tools for your business structure.</h1>
+      <p>Answer three simple questions to generate a tailored shortlist based on UK compliance and pricing priorities.</p>
+    </div>
+
+    <div class="finder-card">
+      <form id="finderForm">
+        <div class="form-group">
+          <label for="type">1. What is your UK business structure?</label>
+          <select name="type" id="type" required>
+            <option value="sole-trader">Sole Trader / Self-Employed</option>
+            <option value="limited-company" selected>Private Limited Company (LTD)</option>
+            <option value="startups">Venture-backed / High-Growth Startup</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="need">2. What is your primary immediate need?</label>
+          <select name="need" id="need" required>
+            <option value="Accounting" selected>Accounting, Invoicing & MTD Filing</option>
+            <option value="Business Banking">Business Bank Account & FX</option>
+            <option value="Payments">Online & In-Person Payment Processing</option>
+            <option value="Expenses">Corporate Cards & Receipt Capture</option>
+            <option value="Payroll">Staff Payroll & Pension Enrolment</option>
+            <option value="Lending">Working Capital & Credit Facility</option>
+            <option value="Tax & Compliance">Corporation Tax & Cap Table Management</option>
+            <option value="Billing">Recurring Subscription Billing</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="priority">3. What is your main operating priority?</label>
+          <select name="priority" id="priority" required>
+            <option value="low-cost" selected>Low Monthly Cost / Free Tier Available</option>
+            <option value="international">Multi-Currency & Low FX Rates</option>
+            <option value="compliance">Strict HMRC MTD & Statutory Compliance</option>
+            <option value="all-in-one">Complete All-in-One Automation</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-block" style="height: 48px; font-size: 1rem;">Generate Stack Shortlist →</button>
+      </form>
+    </div>
+
+    <div id="results" style="display: none; margin-top: 48px; margin-bottom: 60px;">
+      <div class="section-head" style="margin-top: 0; text-align: center; display: block;">
+        <h2>Your Tailored Recommendations</h2>
+        <p>Ranked according to business entity suitability, feature fit, and cost profile.</p>
+      </div>
+      <div class="grid" id="shortlist-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><strong>FinStack.uk</strong><br><small>Independent UK fintech and small business software directory.</small></div>
+      <div>
+        <a href="about.html">About</a> · 
+        <a href="methodology.html">Methodology</a> · 
+        <a href="for-providers.html">For providers</a> · 
+        <a href="privacy.html">Privacy</a> · 
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
+      <a href="https://buysellstartups.com/listings/finstack-uk-msvek53l" target="_blank" rel="noopener"><img src="https://buysellstartups.com/api/badge/finstack-uk-msvek53l" alt="For Sale on Buy Sell Startups"/></a>
+      <a href="https://maidensail.com/startup/finstack" rel="dofollow"><img src="https://maidensail.com/badge/finstack.svg" alt="Listed on Maidensail" height="36"></a>
+    </div>
+  </footer>
+
+  <script src="js/tools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
