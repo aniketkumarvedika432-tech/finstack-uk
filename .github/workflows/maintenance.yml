@@ -1,0 +1,36 @@
+name: FinStack UK Maintenance
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC
+    - cron: '0 6 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - 'js/tools.js'
+  workflow_dispatch: {}
+
+jobs:
+  verify-and-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate static SEO tool pages + sitemap
+        run: node scripts/generate-tool-pages.js
+
+      - name: Verify vendor website links are still live
+        run: node scripts/verify-links.mjs
+        continue-on-error: true
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "finstack-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tools/ sitemap.xml data/link-health.json
+          git diff --staged --quiet || git commit -m "chore: automated tool page + link health refresh"
+          git push
