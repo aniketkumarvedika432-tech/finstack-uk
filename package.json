@@ -6,5 +6,8 @@
     "generate": "node scripts/generate-tool-pages.js",
     "verify-links": "node scripts/verify-links.mjs",
     "serve": "python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
